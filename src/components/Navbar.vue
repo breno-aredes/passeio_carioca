@@ -1,20 +1,23 @@
 <template>
-  <nav class="text-gray-800 fixed w-full transition-all duration-300" 
-       :class="{'bg-blue-50/80 backdrop-filter backdrop-blur-md': scrolled, 'bg-transparent': !scrolled}"
-       style="z-index: 30;">
+  <nav class="text-gray-800 w-full transition-all duration-300 navbar-container" 
+       :class="{'backdrop-filter backdrop-blur-md': scrolled, 'bg-transparent': !scrolled}"
+       style="z-index: 20;">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16">
         <div class="flex items-center">
           <div class="flex-shrink-0 flex items-center">
-            <span class="text-xl font-bold text-blue-800">Passeio Carioca</span>
+            <span class="text-2xl font-bold text-blue-800">Passeio Carioca</span>
           </div>
         </div>
         <div class="hidden md:flex items-center">
           <div class="ml-10 flex items-baseline space-x-4">
-            <a @click.prevent="scrollToSection('#hero')" href="#hero" class="px-3 py-2 rounded-md text-sm font-medium text-blue-800 hover:text-blue-600 transition-colors">Home</a>
-            <a @click.prevent="scrollToSection('#sobre')" href="#sobre" class="px-3 py-2 rounded-md text-sm font-medium text-blue-800 hover:text-blue-600 transition-colors">Sobre nós</a>
-            <a @click.prevent="scrollToSection('#anuncie')" href="#anuncie" class="px-3 py-2 rounded-md text-sm font-medium text-blue-800 hover:text-blue-600 transition-colors">Anuncie</a>
-            <a @click.prevent="scrollToSection('#guia')" href="#guia" class="px-3 py-2 rounded-md text-sm font-medium text-blue-800 hover:text-blue-600 transition-colors">Seja um guia</a>
+            <a v-for="section in sections" 
+               :key="section.id" 
+               :href="section.path" 
+               @click.prevent="handleScroll(section.path)"
+               class="px-3 py-2 rounded-md text-base font-medium text-blue-800 hover:text-blue-600 transition-colors">
+              {{ section.label }}
+            </a>
           </div>
         </div>
         <div class="flex md:hidden items-center">
@@ -30,11 +33,14 @@
     
     <!-- Mobile menu -->
     <div v-if="isOpen" class="md:hidden">
-      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-blue-50/90 backdrop-filter backdrop-blur-md">
-        <a @click.prevent="scrollToSection('#hero')" href="#hero" class="block px-3 py-2 rounded-md text-base font-medium text-blue-800 hover:bg-blue-100/50">Home</a>
-        <a @click.prevent="scrollToSection('#sobre')" href="#sobre" class="block px-3 py-2 rounded-md text-base font-medium text-blue-800 hover:bg-blue-100/50">Sobre nós</a>
-        <a @click.prevent="scrollToSection('#anuncie')" href="#anuncie" class="block px-3 py-2 rounded-md text-base font-medium text-blue-800 hover:bg-blue-100/50">Anuncie</a>
-        <a @click.prevent="scrollToSection('#guia')" href="#guia" class="block px-3 py-2 rounded-md text-base font-medium text-blue-800 hover:bg-blue-100/50">Seja um guia</a>
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/50 backdrop-filter backdrop-blur-md">
+        <a v-for="section in sections" 
+           :key="section.id" 
+           :href="section.path" 
+           @click.prevent="handleScroll(section.path)"
+           class="block px-3 py-2 rounded-md text-base font-medium text-blue-800 hover:bg-blue-100/50">
+          {{ section.label }}
+        </a>
       </div>
     </div>
   </nav>
@@ -42,21 +48,18 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+import { scrollToSection, appSections } from '../utils/scrollUtils';
 
 const isOpen = ref(false);
 const scrolled = ref(false);
+const sections = appSections;
 
 const checkScroll = () => {
   scrolled.value = window.scrollY > 50;
 };
 
-const scrollToSection = (selector) => {
-  const element = document.querySelector(selector);
-  if (element) {
-    window.scrollTo({
-      top: element.offsetTop - 64, // Adjust for navbar height
-      behavior: 'smooth'
-    });
+const handleScroll = (selector) => {
+  if (scrollToSection(selector)) {
     isOpen.value = false;
   }
 };
@@ -75,5 +78,10 @@ onUnmounted(() => {
 .backdrop-filter {
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
+}
+
+.navbar-container {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 </style> 

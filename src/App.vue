@@ -1,12 +1,16 @@
 <template>
-  <div class="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 via-blue-100 to-blue-200">
+  <div class="min-h-screen flex flex-col relative">
+    <!-- Global Background -->
+    <div class="global-background"></div>
+    
     <Navbar />
     
-    <main class="flex-grow">
+    <main class="flex-grow relative z-10">
       <HeroSection />
-      <FeaturesSection />
-      <AdvertiseSection />
-      <GuideSection />
+      <ConhecaPasseioCarioca />
+      <Gameficacao />
+      <MapaGeolocalizado />
+      <PasseiosGuiados />
     </main>
     <Footer />
   </div>
@@ -16,16 +20,10 @@
 import Navbar from './components/Navbar.vue';
 import Footer from './components/Footer.vue';
 import HeroSection from './components/HeroSection.vue';
-import FeaturesSection from './components/FeaturesSection.vue';
-import AdvertiseSection from './components/AdvertiseSection.vue';
-import GuideSection from './components/GuideSection.vue';
-
-const images = [
-  '/images/1.png',
-  '/images/2.jpeg',
-  '/images/3.jpeg',
-  '/images/1.png',
-];
+import ConhecaPasseioCarioca from './components/ConhecaPasseioCarioca.vue';
+import Gameficacao from './components/Gameficacao.vue';
+import MapaGeolocalizado from './components/MapaGeolocalizado.vue';
+import PasseiosGuiados from './components/PasseiosGuiados.vue';
 </script>
 
 <style>
@@ -35,26 +33,25 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #EBF5FF; /* light blue background */
+  background-color: #ffffff;
   color: #333;
+  height: 100%;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-body::before {
-  content: "";
+/* Apply global background directly in the template for better control */
+.global-background {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(191, 219, 254, 0.7) 0%, rgba(191, 219, 254, 0) 20%),
-    radial-gradient(circle at 80% 70%, rgba(147, 197, 253, 0.5) 0%, rgba(147, 197, 253, 0) 25%),
-    radial-gradient(circle at 50% 50%, rgba(221, 241, 255, 0.8) 0%, rgba(221, 241, 255, 0) 60%);
-  z-index: -1;
+  background: url('/images/rio-banner.jpg');
+  opacity: 0.08;
+  z-index: 0;
   pointer-events: none;
 }
 </style>

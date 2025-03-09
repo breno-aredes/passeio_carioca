@@ -1,5 +1,5 @@
 <template>
-  <section id="anuncie" class="py-24 relative overflow-hidden bg-gradient-to-b from-blue-200 to-blue-300">
+  <section id="anuncie" class="py-24 relative overflow-hidden bg-transparent">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-12">
         <div class="md:w-1/2">
@@ -64,12 +64,6 @@
           </div>
         </div>
       </div>
-    </div>
-    
-    <!-- Background Elements -->
-    <div class="absolute inset-0 z-0">
-      <div class="absolute rounded-full w-96 h-96 bg-blue-100/60 top-[10%] right-[-100px] blur-3xl"></div>
-      <div class="absolute rounded-full w-72 h-72 bg-blue-400/30 bottom-[20%] left-[-50px] blur-3xl"></div>
     </div>
   </section>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <section id="guia" class="py-24 relative overflow-hidden bg-gradient-to-b from-blue-100 to-blue-50">
+  <section id="guia" class="py-24 relative overflow-hidden bg-transparent">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="max-w-5xl mx-auto">
         <div class="text-center mb-16">
@@ -108,12 +108,6 @@
           </div>
         </div>
       </div>
-    </div>
-    
-    <!-- Background Elements -->
-    <div class="absolute inset-0 z-0">
-      <div class="absolute rounded-full w-96 h-96 bg-blue-200/40 top-[30%] right-[-150px] blur-3xl"></div>
-      <div class="absolute rounded-full w-72 h-72 bg-blue-100/50 bottom-[10%] left-[-100px] blur-3xl"></div>
     </div>
   </section>
 </template>
