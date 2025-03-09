@@ -1,0 +1,36 @@
+<svg width="375" height="812" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="375" height="812" fill="#3B82F6" />
+  
+  <!-- Status Bar -->
+  <rect width="375" height="44" fill="#2563EB" />
+  
+  <!-- Map Background -->
+  <rect x="0" y="44" width="375" height="570" fill="#E5E7EB" />
+  
+  <!-- Map Content -->
+  <circle cx="187" cy="300" r="150" fill="#D1D5DB" />
+  <circle cx="187" cy="300" r="100" fill="#9CA3AF" />
+  <circle cx="187" cy="300" r="50" fill="#6B7280" />
+  
+  <!-- Location Markers -->
+  <circle cx="150" cy="250" r="10" fill="#EF4444" />
+  <circle cx="220" cy="320" r="10" fill="#EF4444" />
+  <circle cx="180" cy="220" r="10" fill="#EF4444" />
+  <circle cx="270" cy="280" r="10" fill="#EF4444" />
+  
+  <!-- Bottom Navigation Bar -->
+  <rect x="0" y="614" width="375" height="154" fill="#FFFFFF" />
+  
+  <!-- Navigation Icons -->
+  <rect x="40" y="644" width="40" height="40" rx="8" fill="#3B82F6" />
+  <rect x="120" y="644" width="40" height="40" rx="8" fill="#3B82F6" />
+  <rect x="200" y="644" width="40" height="40" rx="8" fill="#3B82F6" />
+  <rect x="280" y="644" width="40" height="40" rx="8" fill="#3B82F6" />
+  
+  <!-- Title -->
+  <text x="187" y="100" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#FFFFFF">Passeio Carioca</text>
+  
+  <!-- Home Indicator -->
+  <rect x="120" y="780" width="135" height="5" rx="2.5" fill="#000000" opacity="0.3" />
+</svg> 
