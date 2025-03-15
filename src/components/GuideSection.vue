@@ -58,7 +58,7 @@
                 
                 <div class="mb-6">
                   <label for="guide-experience" class="block text-blue-800 font-medium mb-2">Experiência como guia</label>
-                  <textarea id="guide-experience" rows="4" class="w-full px-4 py-3 rounded-lg bg-blue-50 border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Descreva sua experiência como guia turístico"></textarea>
+                  <textarea id="guide-experience" rows="4" class="w-full px-4 py-3 rounded-lg bg-blue-50 border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Descreva sua experiência como guia de turismo"></textarea>
                 </div>
                 
                 <div class="mb-6">

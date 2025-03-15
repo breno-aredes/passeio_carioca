@@ -21,7 +21,7 @@ const medalhas = reactive([
     id: 3,
     titulo: 'Pequena África',
     descricao: 'Descubra a história e a cultura africana no Rio',
-    imagem: '/images/medalhas/MedalhaPequena África.png',
+    imagem: '/images/medalhas/MedalhaPequenaAfrica.png',
     isRevealed: false
   },
   {
@@ -42,7 +42,7 @@ const medalhas = reactive([
     id: 6,
     titulo: 'Política Brasileira',
     descricao: 'Visite pontos históricos da política na cidade maravilhosa',
-    imagem: '/images/medalhas/MedalhaPolítica Brasileira.png',
+    imagem: '/images/medalhas/MedalhaPoliticaBrasileira.png',
     isRevealed: false
   },
   {
@@ -96,88 +96,16 @@ function revealItem(medalha) {
         <h2 class="text-4xl md:text-5xl font-bold mb-4 text-blue-900">Gamificação</h2>
         <div class="title-decoration"></div>
         <p class="text-xl text-gray-700 max-w-3xl mx-auto">
-          Transforme sua experiência em uma aventura interativa
+          Descubra o turismo de uma maneira nova com o nosso aplicativo!
         </p>
-      </div>
-
-      <!-- Redesigned features section with modern approach -->
-      <div class="mb-16">
-        <div class="features-container">
-          <div class="feature-item" data-aos="fade-up" data-aos-delay="100">
-            <div class="feature-icon">
-              <i class="pi pi-star text-white text-xl"></i>
-            </div>
-            <div class="feature-content">
-              <h3 class="text-xl font-semibold text-blue-900 mb-2">Acumule Pontos</h3>
-              <p class="text-gray-700">Visite pontos turísticos e complete desafios para subir de nível.</p>
-              <div class="progress-bar">
-                <div class="progress-fill"></div>
-              </div>
-              <div class="feature-badges">
-                <span class="feature-badge">+10 pts</span>
-                <span class="feature-badge">+25 pts</span>
-                <span class="feature-badge">+50 pts</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="feature-item" data-aos="fade-up" data-aos-delay="200">
-            <div class="feature-icon">
-              <i class="pi pi-chart-line text-white text-xl"></i>
-            </div>
-            <div class="feature-content">
-              <h3 class="text-xl font-semibold text-blue-900 mb-2">Ranking de Visitantes</h3>
-              <p class="text-gray-700">Compare seu progresso com outros exploradores da cidade.</p>
-              <div class="leaderboard">
-                <div class="leaderboard-item">
-                  <span class="rank">1</span>
-                  <span class="name">Camila S.</span>
-                  <span class="score">1,240 pts</span>
-                </div>
-                <div class="leaderboard-item">
-                  <span class="rank">2</span>
-                  <span class="name">Pedro M.</span>
-                  <span class="score">980 pts</span>
-                </div>
-                <div class="leaderboard-item you">
-                  <span class="rank">3</span>
-                  <span class="name">Você</span>
-                  <span class="score">830 pts</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="feature-item" data-aos="fade-up" data-aos-delay="300">
-            <div class="feature-icon">
-              <i class="pi pi-gift text-white text-xl"></i>
-            </div>
-            <div class="feature-content">
-              <h3 class="text-xl font-semibold text-blue-900 mb-2">Recompensas Exclusivas</h3>
-              <p class="text-gray-700">Destrave descontos e experiências especiais.</p>
-              <div class="rewards-showcase">
-                <div class="reward">
-                  <div class="reward-icon"><i class="pi pi-ticket"></i></div>
-                  <div class="reward-label">40% OFF</div>
-                </div>
-                <div class="reward">
-                  <div class="reward-icon"><i class="pi pi-thumbs-up"></i></div>
-                  <div class="reward-label">VIP</div>
-                </div>
-                <div class="reward locked">
-                  <div class="reward-icon"><i class="pi pi-lock"></i></div>
-                  <div class="reward-label">???</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- Modernized Medals Section with gradient background -->
       <div class="glass-panel mb-12">
         <h3 class="text-2xl font-semibold text-blue-900 mb-4 text-center">Conquiste Medalhas</h3>
-        <p class="text-gray-700 text-center mb-8">Ganhe medalhas exclusivas ao descobrir locais secretos e completar roteiros temáticos.</p>
+        <p class="text-gray-700 text-center mb-8">
+          Explore os pontos turísticos incríveis da cidade e colecione medalhas digitais ao longo do caminho. Com nossa funcionalidade de gamificação, cada lugar que você visita se torna uma conquista única. Tire uma foto, marque sua presença no aplicativo e ganhe suas medalhas. Quanto mais lugares você visitar, mais medalhas você ganha!
+        </p>
 
         <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
           <div

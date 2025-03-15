@@ -8,8 +8,8 @@
     <main class="flex-grow relative z-10">
       <HeroSection />
       <ConhecaPasseioCarioca />
-      <Gameficacao />
       <MapaGeolocalizado />
+      <Gameficacao />
       <PasseiosGuiados />
     </main>
     <Footer />

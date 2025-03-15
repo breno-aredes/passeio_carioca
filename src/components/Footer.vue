@@ -61,8 +61,17 @@
         </div>
       </div>
       
-      <div class="mt-12 border-t border-blue-400 border-opacity-30 pt-8 text-center text-gray-200">
-        <p>&copy; 2025 Passeio Carioca. Todos os direitos reservados.</p>
+      <div class="mt-12 border-t border-blue-400 border-opacity-30 pt-8 text-center">
+        <!-- Inovatur Banner -->
+        <div class="mb-8 flex justify-center">
+          <img 
+            src="/images/inovatur/Inovatur_Assinatura_Incubadas_Regua_Branco.png" 
+            alt="Inovatur Programa de Incubação de Empresas" 
+            class="w-full max-w-4xl h-auto"
+          />
+        </div>
+        
+        <p class="text-gray-200">&copy; 2025 Passeio Carioca. Todos os direitos reservados.</p>
       </div>
     </div>
   </footer>
