@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen flex flex-col relative">
-    <!-- Global Background -->
     <div class="global-background"></div>
     
     <Navbar />
@@ -9,8 +8,8 @@
       <HeroSection />
       <ConhecaPasseioCarioca />
       <MapaGeolocalizado />
-      <Gameficacao />
       <PasseiosGuiados />
+      <Gameficacao />
     </main>
     <Footer />
   </div>
@@ -42,7 +41,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Apply global background directly in the template for better control */
 .global-background {
   position: fixed;
   top: 0;
@@ -53,5 +51,25 @@ html {
   opacity: 0.08;
   z-index: 0;
   pointer-events: none;
+}
+
+/* Estilo comum para todos os overlays de seção */
+.section-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.4));
+  pointer-events: none;
+}
+
+/* Estilo para decoração de título */
+.title-decoration {
+  height: 3px;
+  width: 80px;
+  background: linear-gradient(to right, #2563eb, #60a5fa);
+  margin: 1rem auto 1.5rem;
+  border-radius: 2px;
 }
 </style>

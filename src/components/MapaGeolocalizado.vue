@@ -1,47 +1,52 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
+import iPhoneMockupParaMapaGeo from './iPhoneMockupParaMapaGeo.vue';
 
 // Manage map display state
 const activePin = ref(null);
 const mapLoaded = ref(false);
-const pinHovered = ref(false);
 
-// Map pins with information about tourist points
+// Map pins with information about tourist points on the app screen
 const mapPins = reactive([
   {
     id: 1,
     name: 'Cristo Redentor',
-    description: 'Um dos pontos turísticos mais famosos do Rio',
+    description: 'Um dos pontos turísticos mais famosos do Rio de Janeiro',
     category: 'Monumento',
-    position: { top: '25%', left: '40%' },
+    position: { top: '37%', left: '40%' },
+    type: 'location'
   },
   {
     id: 2,
     name: 'Pão de Açúcar',
     description: 'Vista panorâmica incrível da cidade',
     category: 'Natureza',
-    position: { top: '38%', left: '52%' },
+    position: { top: '38%', left: '70%' },
+    type: 'location'
   },
   {
     id: 3,
-    name: 'Praia de Copacabana',
-    description: 'Uma das praias mais famosas do mundo',
-    category: 'Praia',
-    position: { top: '60%', left: '45%' },
+    name: 'Centro Histórico',
+    description: 'Região com importantes marcos históricos e culturais',
+    category: 'História',
+    position: { top: '27%', left: '55%' },
+    type: 'location'
   },
   {
     id: 4,
     name: 'Maracanã',
     description: 'O templo do futebol brasileiro',
     category: 'Esporte',
-    position: { top: '42%', left: '30%' },
+    position: { top: '33%', left: '37%' },
+    type: 'location'
   },
   {
     id: 5,
-    name: 'Jardim Botânico',
-    description: 'Paraíso natural com mais de 8 mil espécies de plantas',
-    category: 'Natureza',
-    position: { top: '35%', left: '65%' },
+    name: 'Praia de Copacabana',
+    description: 'Uma das praias mais famosas do mundo',
+    category: 'Praia',
+    position: { top: '47%', left: '62%' },
+    type: 'location'
   },
 ]);
 
@@ -69,16 +74,14 @@ const features = [
   }
 ];
 
-// Handle pin click
-const handlePinClick = (pin) => {
+// Handle pin hover to show details
+const handlePinHover = (pin) => {
   activePin.value = pin;
 };
 
-// Reset active pin
+// Reset active pin on mouse leave
 const resetActivePin = () => {
-  if (!pinHovered.value) {
-    activePin.value = null;
-  }
+  activePin.value = null;
 };
 
 // Animation for map loading
@@ -95,56 +98,56 @@ const scrollToTop = () => {
     behavior: 'smooth'
   });
 };
+
+// Define image path - direct path from public folder with timestamp to prevent caching
+const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
 </script>
 
 <template>
-  <section id="mapa" class="py-24 md:py-32 overflow-hidden relative">
+  <section id="mapa" class="py-16 md:py-24 overflow-hidden relative bg-transparent">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="text-center mb-12">
         <h2 class="text-4xl md:text-5xl font-bold mb-4 text-blue-900">Mapa Geolocalizado</h2>
         <div class="title-decoration"></div>
         <p class="text-xl text-gray-700 max-w-3xl mx-auto">
-          Explore o Rio de Janeiro com ele na palma da sua mão. <br>
-          Mais de 1200 pontos culturais da cidade para programar a sua visita.
+          Cada monumento conta uma história, mas mais do que isso, ele molda um comportamento. 
+          Se você quer conhecer a cultura carioca caminhando por suas ruas, vielas e avenidas, chegou ao lugar certo! No aplicativo Passeio Carioca você encontra pontos históricos, monumentos, igrejas, bares e restaurantes tradicionais e muito mais para programar a sua visita.         
         </p>
       </div>
 
       <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
-        <!-- Map visualization - reduced size -->
+        <!-- Map visualization with iPhone mockup -->
         <div class="lg:w-1/2 mt-6 lg:mt-0 order-2 lg:order-1">
           <div class="relative">
-            <div class="relative map-container" 
-                 @mouseleave="resetActivePin">
-              <img
-                src="/images/mapa_geolocalizado/Geolocalizacao.png"
-                alt="Mapa com pontos geolocalizados"
-                class="w-full max-w-sm mx-auto rounded-lg transition-all duration-500 map-image"
-                :class="{ 'map-loaded': mapLoaded }"
-              >
-              
-              <!-- Interactive Map Pins with location icons -->
-              <div v-for="pin in mapPins" :key="pin.id" 
-                   class="absolute pin-marker"
-                   :class="{ 'pin-active': activePin && activePin.id === pin.id }"
-                   :style="{ top: pin.position.top, left: pin.position.left }"
-                   @click.stop="handlePinClick(pin)"
-                   @mouseenter="pinHovered = true"
-                   @mouseleave="pinHovered = false">
-                <div class="pin-icon flex items-center justify-center">
-                  <i class="pi pi-map-marker text-blue-800"></i>
+            <div class="relative map-container">
+              <!-- iPhone mockup with the app screen -->
+              <div class="static-mockup-container relative">
+                <iPhoneMockupParaMapaGeo :screen-image="screenImage" class="static-mockup" />
+                
+                <!-- Interactive Map Pins overlayed on the iPhone screen -->
+                <div class="map-pins-container absolute">
+                  <div v-for="pin in mapPins" :key="pin.id" 
+                       class="absolute pin-marker"
+                       :class="{ 'pin-active': activePin && activePin.id === pin.id }"
+                       :style="{ top: pin.position.top, left: pin.position.left }"
+                       @mouseenter="handlePinHover(pin)"
+                       @mouseleave="resetActivePin">
+                    <div class="pin-icon flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                        <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                    
+                    <!-- Pin Information Card (shown on hover) -->
+                    <div v-if="activePin && activePin.id === pin.id" class="pin-info-card">
+                      <h4 class="text-lg font-semibold text-blue-900">{{ pin.name }}</h4>
+                      <p class="text-sm text-gray-700">{{ pin.description }}</p>
+                      <span class="pin-category text-blue-800">{{ pin.category }}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-              
-              <!-- Pin Information Card -->
-              <div v-if="activePin" class="pin-info-card" 
-                  :style="{ top: activePin.position.top, left: activePin.position.left }">
-                <h4 class="text-lg font-semibold text-blue-900">{{ activePin.name }}</h4>
-                <p class="text-sm text-gray-700">{{ activePin.description }}</p>
-                <span class="pin-category text-blue-800">{{ activePin.category }}</span>
-              </div>
             </div>
-            
-            <p class="text-center text-gray-700 mt-4 italic">Interaja com os pontos no mapa para mais informações</p>
           </div>
         </div>
         
@@ -152,7 +155,7 @@ const scrollToTop = () => {
         <div class="lg:w-1/2 order-1 lg:order-2">
           <div class="space-y-4">
             <div v-for="(feature, index) in features" :key="index" 
-                class="feature-card flex items-start space-x-4 p-4 bg-white/80 backdrop-filter backdrop-blur-sm rounded-lg border-l-4 border-blue-600 shadow-md transition-all hover:shadow-lg hover:bg-blue-50/80 hover:transform hover:translate-x-1">
+                class="feature-card flex items-start space-x-4 p-4 rounded-lg border-l-4 border-blue-600 transition-all hover:transform hover:translate-x-1">
               <div class="w-12 h-12 bg-gradient-to-r from-blue-700 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
                 <i :class="[feature.icon, 'text-white text-xl']"></i>
               </div>
@@ -220,40 +223,69 @@ const scrollToTop = () => {
 /* Map styling */
 .map-container {
   position: relative;
-  overflow: hidden;
-  border-radius: 12px;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.map-image {
-  opacity: 0;
-  transform: scale(0.98);
-  transition: all 0.8s ease-out;
+/* Static mockup container */
+.static-mockup-container {
+  width: 300px;
+  height: 600px;
+  position: relative;
+  margin: 0 auto;
+  background-color: transparent;
 }
 
-.map-image.map-loaded {
-  opacity: 1;
-  transform: scale(1);
+/* Map pins container */
+.map-pins-container {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
 }
 
 /* Pin styling */
 .pin-marker {
   cursor: pointer;
-  z-index: 10;
-  transition: all 0.3s ease;
+  z-index: 25;
   transform: translateY(0);
+  transition: transform 0.2s ease;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  pointer-events: auto;
 }
 
 .pin-marker:hover {
-  transform: translateY(-5px);
+  transform: scale(1.1);
 }
 
 .pin-active {
-  z-index: 20;
+  z-index: 30;
 }
 
 .pin-icon {
-  font-size: 4rem;
-  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.3));
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.3));
+  color: white;
+  background-color: #2563EB;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.pin-icon svg {
+  width: 18px;
+  height: 18px;
 }
 
 /* Pin information card */
@@ -262,11 +294,15 @@ const scrollToTop = () => {
   background: white;
   border-radius: 8px;
   padding: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   width: 200px;
-  transform: translate(-50%, -120%);
-  z-index: 30;
+  left: 50%;
+  bottom: 100%;
+  margin-bottom: 15px;
+  transform: translateX(-50%);
+  z-index: 40;
   animation: fadeIn 0.3s ease-out;
+  border: 1px solid rgba(37, 99, 235, 0.3);
 }
 
 .pin-info-card::after {
@@ -282,6 +318,7 @@ const scrollToTop = () => {
   border-top: 8px solid white;
 }
 
+/* Pin category styling */
 .pin-category {
   display: inline-block;
   padding: 2px 8px;
@@ -289,6 +326,7 @@ const scrollToTop = () => {
   font-size: 12px;
   margin-top: 6px;
   font-weight: 500;
+  background-color: rgba(219, 234, 254, 0.6);
 }
 
 /* Feature cards */

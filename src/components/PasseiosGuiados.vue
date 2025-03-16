@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, onMounted, watchEffect } from 'vue';
+import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
 
 // Dados dos passeios
 const tours = reactive([
@@ -8,139 +8,109 @@ const tours = reactive([
     title: "Rio Modernista",
     location: "Centro do Rio, Flamengo",
     description: "Embarque numa jornada onde a inovação do século XX se encontra com a energia urbana da cidade, explorando a arquitetura modernista que revolucionou o Rio.",
-    tag: "Mais popular",
-    rating: 4.9,
+    capacity: 15,
+    tourRating: 4.9,
+    guideRating: 4.8,
     duration: "3h30",
-    imgSrc: "/images/passeios/mec-2.jpg",
-    highlights: ["Palácio Gustavo Capanema", "Museu de Arte Moderna", "Conjunto Habitacional Pedregulho"]
+    imgSrc: "/images/passeios/mec-2.jpg"
   },
   {
     id: 2,
     title: "Laranjeiras Histórica",
     location: "Laranjeiras",
     description: "Explore o charmoso bairro de Laranjeiras, descubra seus palacetes históricos e a atmosfera tranquila e elegante que faz deste um dos mais belos e preservados bairros cariocas.",
-    tag: "Melhor avaliado",
-    rating: 4.8,
+    capacity: 12,
+    tourRating: 4.8,
+    guideRating: 5.0,
     duration: "2h45",
-    imgSrc: "/images/passeios/ed-laranjeiras.jpeg",
-    highlights: ["Palácio Guanabara", "Parque Guinle", "Castelinho do Flamengo"]
+    imgSrc: "/images/passeios/ed-laranjeiras.jpeg"
   },
   {
     id: 3,
     title: "Rio Art Déco",
     location: "Centro, Copacabana",
     description: "Explore os elegantes e sofisticados edifícios Art Déco que adornam as ruas do Rio, um estilo que marcou época durante a transformação urbana da cidade nas décadas de 1930 e 1940.",
-    tag: "Novo",
-    rating: 4.7,
+    capacity: 10,
+    tourRating: 4.7,
+    guideRating: 4.9,
     duration: "3h15",
-    imgSrc: "/images/passeios/23.jpg",
-    highlights: ["Edifício Mesbla", "Copacabana Palace", "Cinema Roxy"]
+    imgSrc: "/images/passeios/23.jpg"
   },
   {
     id: 4,
     title: "Santa Teresa Boêmia",
     location: "Santa Teresa",
     description: "Conheça o reduto artístico e boêmio do Rio, com suas ruelas charmosas, casarões históricos e uma vista deslumbrante da cidade maravilhosa.",
-    tag: "Especial",
-    rating: 4.9,
+    capacity: 20,
+    tourRating: 4.9,
+    guideRating: 4.7,
     duration: "4h00",
-    imgSrc: "/images/passeios/mec-2.jpg",
-    highlights: ["Parque das Ruínas", "Ateliês Locais", "Bondinho de Santa Teresa"]
+    imgSrc: "/images/passeios/mec-2.jpg"
   }
 ]);
 
 // Estado atual
 const currentIndex = ref(0);
-const isDragging = ref(false);
-const startX = ref(0);
-const totalTours = tours.length;
-const autoplayEnabled = ref(true);
 const autoplayInterval = ref(null);
-const selectedTourIndex = ref(0);
-const showDetails = ref(false);
+const totalTours = tours.length;
+const isHovering = ref(false);
+
+// Função para determinar quantos cards mostrar baseado no tamanho da tela
+const getItemsToShow = () => {
+  if (window.innerWidth >= 1280) return 3; // xl
+  if (window.innerWidth >= 1024) return 3; // lg
+  if (window.innerWidth >= 768) return 2;  // md
+  return 1; // sm e xs
+};
+
+const itemsToShow = ref(getItemsToShow());
+
+// Ajusta o número de itens a mostrar quando a janela é redimensionada
+const handleResize = () => {
+  itemsToShow.value = getItemsToShow();
+};
 
 // Navegação do carrossel
 const nextSlide = () => {
-  currentIndex.value = (currentIndex.value + 1) % totalTours;
+  currentIndex.value = (currentIndex.value + 1) % (totalTours - itemsToShow.value + 1);
 };
 
 const prevSlide = () => {
-  currentIndex.value = (currentIndex.value - 1 + totalTours) % totalTours;
+  currentIndex.value = (currentIndex.value - 1 + (totalTours - itemsToShow.value + 1)) % (totalTours - itemsToShow.value + 1);
+};
+
+const goToSlide = (index) => {
+  currentIndex.value = index;
 };
 
 // Configuração do autoplay
 const startAutoplay = () => {
-  if (autoplayEnabled.value) {
+  if (!isHovering.value) {
     autoplayInterval.value = setInterval(() => {
-      if (!isDragging.value && !showDetails.value) {
-        nextSlide();
-      }
+      nextSlide();
     }, 5000);
   }
 };
 
 const stopAutoplay = () => {
-  if (autoplayInterval.value) {
-    clearInterval(autoplayInterval.value);
-    autoplayInterval.value = null;
-  }
+  clearInterval(autoplayInterval.value);
+  autoplayInterval.value = null;
 };
 
-// Manipulação de eventos de toque para navegação móvel
-const handleDragStart = (e) => {
-  isDragging.value = true;
-  startX.value = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-  stopAutoplay();
-};
-
-const handleDragEnd = (e) => {
-  if (!isDragging.value) return;
-
-  const endX = e.type === 'touchend' ? e.changedTouches[0].clientX : e.clientX;
-  const diffX = endX - startX.value;
-
-  // Se o arrasto for significativo, muda o slide
-  if (Math.abs(diffX) > 100) {
-    if (diffX > 0) {
-      prevSlide();
-    } else {
-      nextSlide();
-    }
-  }
-
-  isDragging.value = false;
-  startAutoplay();
-};
-
-// Exibir detalhes do tour
-const viewTourDetails = (index) => {
-  selectedTourIndex.value = index;
-  showDetails.value = true;
-  stopAutoplay();
-};
-
-// Fechar detalhes
-const closeDetails = () => {
-  showDetails.value = false;
-  startAutoplay();
-};
-
-// Iniciar e limpar autoplay
+// Lifecycle hooks
 onMounted(() => {
+  window.addEventListener('resize', handleResize);
   startAutoplay();
 });
 
-watchEffect(() => {
-  if (showDetails.value) {
-    stopAutoplay();
-  } else if (autoplayEnabled.value && !autoplayInterval.value) {
-    startAutoplay();
-  }
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize);
+  stopAutoplay();
 });
 </script>
 
 <template>
-  <section id="passeios" class="bg-transparent py-24 md:py-32 overflow-hidden relative">
+  <section id="passeios" class="bg-transparent py-16 md:py-24 overflow-hidden relative">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="text-center mb-16">
         <h2 class="text-4xl md:text-5xl font-bold mb-4 text-blue-900">Passeios Guiados</h2>
@@ -150,60 +120,58 @@ watchEffect(() => {
         </p>
       </div>
 
-      <!-- Modern immersive tour carousel -->
-      <div
-        class="relative p-4 carousel-container"
-        @touchstart="handleDragStart"
-        @touchend="handleDragEnd"
-        @mousedown="handleDragStart"
-        @mouseup="handleDragEnd"
-        @mouseleave="isDragging ? handleDragEnd($event) : null"
+      <!-- Carousel container -->
+      <div 
+        class="carousel-container"
+        @mouseenter="() => { isHovering = true; stopAutoplay(); }"
+        @mouseleave="() => { isHovering = false; startAutoplay(); }"
       >
         <!-- Botões de navegação -->
         <button 
           class="nav-button left"
           @click="prevSlide" 
           aria-label="Passeio anterior"
+          v-show="currentIndex > 0"
         >
           <i class="pi pi-chevron-left"></i>
         </button>
 
         <!-- Carousel principal -->
-        <div class="carousel-track-container">
+        <div class="carousel-wrapper">
           <div 
             class="carousel-track"
-            :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
+            :style="{ transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)` }"
           >
             <div
               v-for="(tour, index) in tours"
               :key="tour.id"
               class="carousel-slide"
-              @click="viewTourDetails(index)"
+              :style="{ width: `${100 / itemsToShow}%` }"
             >
-              <div class="tour-card" :class="{ 'active': index === currentIndex }">
+              <div class="tour-card" :class="{ 'active': index >= currentIndex && index < currentIndex + itemsToShow }">
                 <div class="tour-image-container">
                   <div class="tour-image" :style="{ backgroundImage: `url('${tour.imgSrc}')` }">
                     <div class="tour-overlay"></div>
                   </div>
                   
-                  <div class="tour-tag">{{ tour.tag }}</div>
+                  <div class="tour-info-container tour-info-right">
+                    <div class="tour-duration">
+                      <i class="pi pi-clock"></i>
+                      <span>{{ tour.duration }}</span>
+                    </div>
+                  </div>
                   
-                  <div class="tour-duration">
-                    <i class="pi pi-clock"></i>
-                    <span>{{ tour.duration }}</span>
+                  <div class="tour-info-container tour-info-left">
+                    <div class="tour-capacity">
+                      <i class="pi pi-users"></i>
+                      <span>Capacidade: {{ tour.capacity }}</span>
+                    </div>
                   </div>
                 </div>
 
                 <div class="tour-content">
                   <div class="tour-header">
                     <h3 class="tour-title">{{ tour.title }}</h3>
-                    <div class="tour-rating">
-                      <span class="rating-value">{{ tour.rating }}</span>
-                      <div class="rating-stars">
-                        <i v-for="n in Math.floor(tour.rating)" :key="n" class="pi pi-star-fill star-filled"></i>
-                        <i v-if="tour.rating % 1 > 0" class="pi pi-star star-empty"></i>
-                      </div>
-                    </div>
                   </div>
 
                   <div class="tour-location">
@@ -213,13 +181,26 @@ watchEffect(() => {
 
                   <p class="tour-description">{{ tour.description }}</p>
                   
-                  <div class="tour-highlights">
-                    <div v-for="(highlight, idx) in tour.highlights.slice(0, 2)" :key="idx" class="tour-highlight">
-                      <i class="pi pi-check"></i>
-                      <span>{{ highlight }}</span>
+                  <div class="tour-ratings">
+                    <div class="rating-item">
+                      <span class="rating-label">Avaliação do passeio:</span>
+                      <div class="rating-value-container">
+                        <span class="rating-value">{{ tour.tourRating }}</span>
+                        <div class="rating-stars">
+                          <i v-for="n in Math.floor(tour.tourRating)" :key="n" class="pi pi-star-fill star-filled"></i>
+                          <i v-if="tour.tourRating % 1 > 0" class="pi pi-star star-empty"></i>
+                        </div>
+                      </div>
                     </div>
-                    <div v-if="tour.highlights.length > 2" class="tour-highlight-more">
-                      +{{ tour.highlights.length - 2 }} mais
+                    <div class="rating-item">
+                      <span class="rating-label">Avaliação do guia:</span>
+                      <div class="rating-value-container">
+                        <span class="rating-value">{{ tour.guideRating }}</span>
+                        <div class="rating-stars">
+                          <i v-for="n in Math.floor(tour.guideRating)" :key="n" class="pi pi-star-fill star-filled"></i>
+                          <i v-if="tour.guideRating % 1 > 0" class="pi pi-star star-empty"></i>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -232,6 +213,7 @@ watchEffect(() => {
           class="nav-button right"
           @click="nextSlide" 
           aria-label="Próximo passeio"
+          v-show="currentIndex < totalTours - itemsToShow"
         >
           <i class="pi pi-chevron-right"></i>
         </button>
@@ -240,83 +222,16 @@ watchEffect(() => {
       <!-- Indicadores do carousel -->
       <div class="carousel-indicators">
         <button
-          v-for="(_, index) in tours"
-          :key="index"
-          @click="currentIndex = index"
+          v-for="index in (totalTours - itemsToShow + 1)"
+          :key="index - 1"
+          @click="goToSlide(index - 1)"
           class="indicator"
-          :class="{ 'active': index === currentIndex }"
-          :aria-label="`Slide ${index + 1}`"
+          :class="{ 'active': index - 1 === currentIndex }"
+          :aria-label="`Slide ${index}`"
         ></button>
       </div>
-
-      <!-- Modal de detalhes modernizado -->
-      <div 
-        v-if="showDetails" 
-        class="modal-overlay"
-        @click.self="closeDetails"
-      >
-        <div class="modal-container">
-          <div class="modal-content">
-            <div 
-              class="modal-header" 
-              :style="{ backgroundImage: `url('${tours[selectedTourIndex].imgSrc}')` }"
-            >
-              <div class="modal-header-overlay"></div>
-              <button 
-                @click="closeDetails" 
-                class="modal-close-button"
-              >
-                <i class="pi pi-times"></i>
-              </button>
-            </div>
-            
-            <div class="modal-body">
-              <h3 class="modal-title">{{ tours[selectedTourIndex].title }}</h3>
-              
-              <div class="modal-info">
-                <div class="info-item">
-                  <i class="pi pi-map-marker"></i>
-                  <span>{{ tours[selectedTourIndex].location }}</span>
-                </div>
-                <div class="info-item">
-                  <i class="pi pi-clock"></i>
-                  <span>{{ tours[selectedTourIndex].duration }}</span>
-                </div>
-                <div class="info-item">
-                  <span class="rating-value">{{ tours[selectedTourIndex].rating }}</span>
-                  <div class="rating-stars">
-                    <i v-for="n in Math.floor(tours[selectedTourIndex].rating)" :key="n" class="pi pi-star-fill star-filled"></i>
-                    <i v-if="tours[selectedTourIndex].rating % 1 > 0" class="pi pi-star star-empty"></i>
-                  </div>
-                </div>
-              </div>
-              
-              <p class="modal-description">{{ tours[selectedTourIndex].description }}</p>
-              
-              <h4 class="highlights-title">Destaques do passeio:</h4>
-              <ul class="highlights-list">
-                <li v-for="(highlight, idx) in tours[selectedTourIndex].highlights" :key="idx" class="highlight-item">
-                  <i class="pi pi-check"></i>
-                  <span>{{ highlight }}</span>
-                </li>
-              </ul>
-              
-              <div class="modal-actions">
-                <button class="action-button primary">
-                  <i class="pi pi-calendar"></i>
-                  <span>Agendar passeio</span>
-                </button>
-                <button class="action-button secondary">
-                  <i class="pi pi-heart"></i>
-                  <span>Salvar para depois</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-
+    
     <!-- Light overlay for section readability -->
     <div class="absolute inset-0 z-1">
       <div class="section-overlay"></div>
@@ -328,16 +243,6 @@ watchEffect(() => {
 #passeios {
   position: relative;
   overflow: hidden;
-}
-
-.section-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
-  pointer-events: none;
 }
 
 .title-decoration {
@@ -363,25 +268,25 @@ watchEffect(() => {
 /* Modern Carousel Styling */
 .carousel-container {
   position: relative;
-  overflow: hidden;
   padding: 20px 0;
 }
 
-.carousel-track-container {
+.carousel-wrapper {
+  position: relative;
   overflow: hidden;
-  width: 100%;
+  margin: 0 50px;
 }
 
 .carousel-track {
   display: flex;
   transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: transform;
 }
 
 .carousel-slide {
-  flex: 0 0 100%;
-  padding: 0 20px;
+  flex-shrink: 0;
+  padding: 0 12px;
   box-sizing: border-box;
-  cursor: pointer;
 }
 
 .nav-button {
@@ -394,27 +299,28 @@ watchEffect(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   color: #1e40af;
   border-radius: 50%;
   border: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .nav-button:hover {
   background: white;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   transform: translateY(-50%) scale(1.05);
+  color: #3b82f6;
 }
 
 .nav-button.left {
-  left: 10px;
+  left: 0;
 }
 
 .nav-button.right {
-  right: 10px;
+  right: 0;
 }
 
 .carousel-indicators {
@@ -425,9 +331,9 @@ watchEffect(() => {
 }
 
 .indicator {
-  width: 8px;
-  height: 8px;
-  background-color: #cbd5e1;
+  width: 10px;
+  height: 10px;
+  background-color: rgba(203, 213, 225, 0.7);
   border-radius: 50%;
   border: none;
   padding: 0;
@@ -436,33 +342,31 @@ watchEffect(() => {
 }
 
 .indicator.active {
-  width: 24px;
+  width: 28px;
   background-color: #3b82f6;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 /* Modern Tour Card Styling */
 .tour-card {
   overflow: hidden;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  transform: scale(0.95);
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   height: 100%;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: translateY(0);
 }
 
 .tour-card.active {
-  transform: scale(1);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
 }
 
 .tour-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
 .tour-image-container {
@@ -486,27 +390,30 @@ watchEffect(() => {
 .tour-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.6));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
 }
 
-.tour-tag {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
-}
-
-.tour-duration {
+.tour-info-container {
   position: absolute;
   bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tour-info-right {
   right: 16px;
-  background: rgba(255, 255, 255, 0.9);
+  align-items: flex-end;
+}
+
+.tour-info-left {
+  left: 16px;
+  align-items: flex-start;
+}
+
+.tour-capacity,
+.tour-duration {
+  background: rgba(255, 255, 255, 0.7);
   color: #1e40af;
   padding: 6px 12px;
   border-radius: 20px;
@@ -515,19 +422,17 @@ watchEffect(() => {
   display: flex;
   align-items: center;
   gap: 5px;
+  backdrop-filter: blur(3px);
 }
 
 .tour-content {
-  padding: 24px;
+  padding: 20px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
 
 .tour-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
   margin-bottom: 12px;
 }
 
@@ -538,7 +443,48 @@ watchEffect(() => {
   margin: 0;
 }
 
-.tour-rating {
+.tour-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+
+.tour-description {
+  color: #475569;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.tour-ratings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 12px;
+}
+
+.rating-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rating-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.rating-value-container {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -555,244 +501,43 @@ watchEffect(() => {
 }
 
 .star-filled, .star-empty {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
-.tour-location {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #64748b;
-  font-size: 0.9rem;
-  margin-bottom: 16px;
-}
-
-.tour-description {
-  color: #475569;
-  font-size: 0.95rem;
-  margin-bottom: 16px;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  flex-grow: 1;
-}
-
-.tour-highlights {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.tour-highlight {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.tour-highlight i {
-  font-size: 0.7rem;
-}
-
-.tour-highlight-more {
-  background: rgba(100, 116, 139, 0.1);
-  color: #64748b;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-}
-
-/* Modal styling */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(5px);
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.modal-container {
-  width: 100%;
-  max-width: 700px;
-  max-height: 90vh;
-  background: white;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-  animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes modalIn {
-  0% { opacity: 0; transform: scale(0.95); }
-  100% { opacity: 1; transform: scale(1); }
-}
-
-.modal-content {
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-header {
-  height: 200px;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.modal-header-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6));
-}
-
-.modal-close-button {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 40px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.8);
-  color: #1e40af;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(3px);
-}
-
-.modal-close-button:hover {
-  background: white;
-  transform: scale(1.1);
-}
-
-.modal-body {
-  padding: 32px;
-  overflow-y: auto;
-  max-height: calc(90vh - 200px);
-}
-
-.modal-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #1e40af;
-  margin: 0 0 16px 0;
-}
-
-.modal-info {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  margin-bottom: 24px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.info-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #64748b;
-}
-
-.modal-description {
-  color: #475569;
-  line-height: 1.6;
-  margin-bottom: 24px;
-}
-
-.highlights-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #1e40af;
-  margin: 0 0 16px 0;
-}
-
-.highlights-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 32px 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 12px;
-}
-
-.highlight-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #475569;
-}
-
-.highlight-item i {
-  color: #10b981;
-}
-
-.modal-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.action-button {
-  flex: 1;
-  min-width: 180px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border-radius: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.action-button.primary {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  color: white;
-  border: none;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-}
-
-.action-button.primary:hover {
-  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
-  transform: translateY(-2px);
-}
-
-.action-button.secondary {
-  background: white;
-  color: #3b82f6;
-  border: 2px solid #3b82f6;
-}
-
-.action-button.secondary:hover {
-  background: rgba(59, 130, 246, 0.05);
-}
-
-@media (max-width: 768px) {
-  .modal-info {
-    flex-direction: column;
-    gap: 16px;
+/* Responsive styling */
+@media (max-width: 640px) {
+  .carousel-wrapper {
+    margin: 0 40px;
   }
   
-  .highlights-list {
-    grid-template-columns: 1fr;
+  .nav-button {
+    width: 40px;
+    height: 40px;
   }
   
-  .modal-actions {
-    flex-direction: column;
+  .tour-card {
+    border-radius: 12px;
+  }
+  
+  .tour-image-container {
+    height: 180px;
+  }
+  
+  .tour-content {
+    padding: 16px;
+  }
+  
+  .tour-title {
+    font-size: 1.2rem;
+  }
+  
+  .tour-description {
+    -webkit-line-clamp: 2;
+    font-size: 0.9rem;
+  }
+  
+  .rating-label {
+    font-size: 0.8rem;
   }
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
-  <section id="hero" class="bg-transparent pt-32 pb-24 md:py-32 md:pt-40 overflow-hidden relative">
+  <section id="hero" class="bg-transparent pt-16 pb-16 md:py-24 md:pt-24 overflow-hidden relative">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="flex flex-col md:flex-row items-center justify-between gap-12">
         <!-- Text Content -->
         <div class="md:w-1/2 text-gray-800 hero-text" ref="heroTextRef">
-          <h1 class="text-4xl md:text-5xl font-bold mb-6 text-blue-900 transition-all duration-700" 
+          <h1 class="text-5xl md:text-5xl font-bold mb-6 text-blue-900 transition-all duration-700" 
               :style="{
                 transform: active ? 'translateY(0)' : 'translateY(20px)',
                 opacity: active ? 1 : 0,
@@ -12,7 +12,7 @@
               }">
             Descubra o Aplicativo Passeio Carioca
           </h1>
-          <p class="text-xl md:text-2xl mb-8 text-blue-800 transition-all duration-700" 
+          <p class="text-xl md:text-2xl mb-8 text-gray-700 transition-all duration-700" 
              :style="{
                transform: active ? 'translateY(0)' : 'translateY(20px)',
                opacity: active ? 1 : 0,
@@ -53,7 +53,7 @@
     
     <!-- Light overlay for hero section readability -->
     <div class="absolute inset-0 z-1">
-      <div class="hero-overlay"></div>
+      <div class="section-overlay"></div>
     </div>
   </section>
 </template>
@@ -101,15 +101,5 @@ onMounted(() => {
 #hero {
   position: relative;
   overflow: hidden;
-}
-
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
-  pointer-events: none;
 }
 </style> 

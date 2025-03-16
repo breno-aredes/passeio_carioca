@@ -90,7 +90,7 @@ function revealItem(medalha) {
 </script>
 
 <template>
-  <section id="gameficacao" class="bg-transparent py-24 md:py-32 overflow-hidden relative">
+  <section id="gameficacao" class="py-16 md:py-24 bg-transparent relative overflow-hidden">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="text-center mb-16">
         <h2 class="text-4xl md:text-5xl font-bold mb-4 text-blue-900">Gamificação</h2>
@@ -100,8 +100,8 @@ function revealItem(medalha) {
         </p>
       </div>
 
-      <!-- Modernized Medals Section with gradient background -->
-      <div class="glass-panel mb-12">
+      <!-- Medals Section -->
+      <div class="medal-panel mb-12">
         <h3 class="text-2xl font-semibold text-blue-900 mb-4 text-center">Conquiste Medalhas</h3>
         <p class="text-gray-700 text-center mb-8">
           Explore os pontos turísticos incríveis da cidade e colecione medalhas digitais ao longo do caminho. Com nossa funcionalidade de gamificação, cada lugar que você visita se torna uma conquista única. Tire uma foto, marque sua presença no aplicativo e ganhe suas medalhas. Quanto mais lugares você visitar, mais medalhas você ganha!
@@ -116,7 +116,11 @@ function revealItem(medalha) {
           >
             <div class="aspect-square mb-1 relative overflow-hidden rounded-full medal-container">
               <div v-show="!medalha.isRevealed" class="absolute inset-0 flex flex-col items-center justify-center medal-placeholder">
-                <i class="pi pi-question-circle text-xl"></i>
+                <img 
+                  src="/images/logo_novo_passeiocarioca-removebg.png" 
+                  alt="Passeio Carioca Logo" 
+                  class="w-2/3 h-2/3 object-contain"
+                />
               </div>
               <img
                 :src="medalha.imagem"
@@ -133,7 +137,7 @@ function revealItem(medalha) {
         </div>
       </div>
     </div>
-
+    
     <!-- Light overlay for section readability -->
     <div class="absolute inset-0 z-1">
       <div class="section-overlay"></div>
@@ -142,21 +146,6 @@ function revealItem(medalha) {
 </template>
 
 <style scoped>
-#gameficacao {
-  position: relative;
-  overflow: hidden;
-}
-
-.section-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
-  pointer-events: none;
-}
-
 .title-decoration {
   width: 50%;
   height: 2px;
@@ -177,172 +166,9 @@ function revealItem(medalha) {
   border-radius: 2px;
 }
 
-/* Modern Features Styling */
-.features-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 30px;
-}
-
-@media (min-width: 768px) {
-  .features-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.feature-item {
-  border-radius: 16px;
-  padding: 2rem;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2));
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-  transition: all 0.3s ease;
-}
-
-.feature-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(31, 38, 135, 0.15);
-}
-
-.feature-icon {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #4f46e5, #2563eb);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
-}
-
-.feature-content {
-  padding-left: 0.5rem;
-}
-
-/* Progress Bar */
-.progress-bar {
-  height: 6px;
-  background: rgba(203, 213, 225, 0.4);
-  border-radius: 3px;
-  margin: 12px 0;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  width: 75%;
-  background: linear-gradient(90deg, #3b82f6, #2563eb);
-  border-radius: 3px;
-  animation: progressFill 2s ease-out;
-}
-
-@keyframes progressFill {
-  0% { width: 0; }
-  100% { width: 75%; }
-}
-
-.feature-badges {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.feature-badge {
-  background: rgba(59, 130, 246, 0.1);
-  color: #2563eb;
-  font-size: 0.75rem;
-  padding: 4px 8px;
-  border-radius: 999px;
-  font-weight: 600;
-}
-
-/* Leaderboard */
-.leaderboard {
-  margin-top: 12px;
-}
-
-.leaderboard-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 12px;
-  margin-bottom: 8px;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 8px;
-  font-size: 0.875rem;
-}
-
-.leaderboard-item.you {
-  background: rgba(59, 130, 246, 0.1);
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
-}
-
-.rank {
-  font-weight: bold;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: rgba(59, 130, 246, 0.1);
-  color: #2563eb;
-}
-
-/* Rewards */
-.rewards-showcase {
-  display: flex;
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.reward {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 12px;
-  transition: all 0.3s ease;
-}
-
-.reward:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.1);
-}
-
-.reward-icon {
-  font-size: 1.25rem;
-  color: #2563eb;
-  margin-bottom: 5px;
-}
-
-.reward-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #1e40af;
-}
-
-.reward.locked {
-  opacity: 0.7;
-  background: rgba(209, 213, 219, 0.6);
-}
-
-.reward.locked .reward-icon, 
-.reward.locked .reward-label {
-  color: #6b7280;
-}
-
-/* Modernized medal section with glassmorphism */
-.glass-panel {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
-  backdrop-filter: blur(10px);
+/* Medal styling */
+.medal-panel {
   border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
   padding: 2rem;
 }
 
@@ -355,8 +181,8 @@ function revealItem(medalha) {
 }
 
 .medal-placeholder {
-  background: linear-gradient(145deg, #eef2ff, #e0e7ff);
-  color: #4f46e5;
+  background: rgba(30, 64, 175, 0.1);
+  color: #ffffff;
   transition: all 0.3s ease-in-out;
 }
 
@@ -373,6 +199,17 @@ function revealItem(medalha) {
 .medal-glow.active {
   opacity: 1;
   animation: pulse 2s infinite;
+}
+
+/* Hero overlay styling (copied from HeroSection) */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
+  pointer-events: none;
 }
 
 @keyframes pulse {
