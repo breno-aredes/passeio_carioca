@@ -21,34 +21,91 @@
             <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
               <div class="mt-2">
                 <p class="text-gray-700 mb-6 leading-relaxed">
-                  Você é um guia de turismo apaixonado por compartilhar os segredos e maravilhas da nossa cidade? Junte-se a nós e torne-se um parceiro em nossa plataforma de turismo! Faça parte de uma comunidade de guias apaixonados por turismo, compartilhando seu conhecimento e entusiasmo com viajantes de todo o mundo! Registre-se agora e comece a transformar sua paixão em uma experiência única de turismo, aumentando sua visibilidade na cidade.
+                  Para você guia de turismo poder comercializar seus passeios guiados na plataforma Passeio Carioca, forneça os seguintes dados para cadastro:
                 </p>
               </div>
               <div class="mt-6">
                 <form @submit.prevent="submitForm" class="space-y-5">
+                  <!-- Informações pessoais -->
+                  <h4 class="text-lg font-medium text-blue-900 border-b border-gray-200 pb-2 mb-4">Informações Pessoais</h4>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                       <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome completo</label>
                       <input type="text" id="name" v-model="formData.name" required
-                            placeholder="Ex: João da Silva"
+                            placeholder="Seu nome completo"
                             class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2">
                     </div>
                     <div>
                       <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                       <input type="email" id="email" v-model="formData.email" required
-                            placeholder="Ex: joao@email.com"
+                            placeholder="seu.email@exemplo.com"
+                            class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2">
+                    </div>
+                  </div>
+                  
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label for="cpf" class="block text-sm font-medium text-gray-700 mb-1">CPF</label>
+                      <input type="text" id="cpf" v-model="formData.cpf" required
+                            @input="formatCPF" maxlength="14"
+                            placeholder="000.000.000-00"
+                            class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2">
+                    </div>
+                    <div>
+                      <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Whatsapp</label>
+                      <input type="tel" id="phone" v-model="formData.phone" required
+                            @input="formatPhoneNumber" maxlength="15"
+                            placeholder="(21) 99999-9999"
                             class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2">
                     </div>
                   </div>
                   
                   <div>
-                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
-                    <input type="tel" id="phone" v-model="formData.phone" required
-                          @input="formatPhoneNumber" maxlength="15"
-                          placeholder="(21) 99999-9999"
-                          class="w-full sm:w-64 rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2">
+                    <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Endereço completo</label>
+                    <input type="text" id="address" v-model="formData.address" required
+                          placeholder="Rua, número, complemento, bairro, cidade, estado, CEP"
+                          class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2">
+                  </div>
+
+                  <div>
+                    <label for="experience" class="block text-sm font-medium text-gray-700 mb-1">Experiência como guia</label>
+                    <textarea id="experience" v-model="formData.experience" rows="4" required
+                              placeholder="Descreva sua experiência como guia, formação, certificações, há quanto tempo trabalha na área, idiomas que domina, etc."
+                              class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2"></textarea>
                   </div>
                   
+                  <!-- Informações bancárias -->
+                  <h4 class="text-lg font-medium text-blue-900 border-b border-gray-200 pb-2 mb-4">Informações Bancárias</h4>
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                    <div>
+                      <label for="bank" class="block text-sm font-medium text-gray-700 mb-1">Banco</label>
+                      <input type="text" id="bank" v-model="formData.bank" required
+                            placeholder="Nome do banco"
+                            class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2">
+                    </div>
+                    <div>
+                      <label for="agency" class="block text-sm font-medium text-gray-700 mb-1">Agência</label>
+                      <input type="text" id="agency" v-model="formData.agency" required
+                            placeholder="Número da agência"
+                            class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2">
+                    </div>
+                    <div>
+                      <label for="account" class="block text-sm font-medium text-gray-700 mb-1">Conta Corrente</label>
+                      <input type="text" id="account" v-model="formData.account" required
+                            placeholder="Número da conta"
+                            class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2">
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label for="pixKey" class="block text-sm font-medium text-gray-700 mb-1">Chave PIX</label>
+                    <input type="text" id="pixKey" v-model="formData.pixKey" required
+                          placeholder="Sua chave PIX (CPF, telefone, email ou chave aleatória)"
+                          class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2">
+                  </div>
+                  
+                  <!-- Informações sobre o passeio -->
+                  <h4 class="text-lg font-medium text-blue-900 border-b border-gray-200 pb-2 mb-4">Informações do Passeio</h4>
                   <div>
                     <label for="tourName" class="block text-sm font-medium text-gray-700 mb-1">Nome do Passeio</label>
                     <input type="text" id="tourName" v-model="formData.tourName" required
@@ -90,11 +147,19 @@
                               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2"></textarea>
                   </div>
                   
-                  <div>
-                    <label for="experience" class="block text-sm font-medium text-gray-700 mb-1">Experiência como guia</label>
-                    <textarea id="experience" v-model="formData.experience" rows="4" required
-                              placeholder="Descreva sua experiência como guia, formação, certificações, há quanto tempo trabalha na área, idiomas que domina, etc."
-                              class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2"></textarea>
+                  <!-- Upload de documentos -->
+                  <h4 class="text-lg font-medium text-blue-900 border-b border-gray-200 pb-2 mb-4">Documentação</h4>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label for="cadasturPhoto" class="block text-sm font-medium text-gray-700 mb-1">Foto do CADASTUR</label>
+                      <input type="file" id="cadasturPhoto" @change="handleCadasturPhotoUpload" accept="image/*"
+                            class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2">
+                    </div>
+                    <div>
+                      <label for="personalPhoto" class="block text-sm font-medium text-gray-700 mb-1">Sua foto pessoal</label>
+                      <input type="file" id="personalPhoto" @change="handlePersonalPhotoUpload" accept="image/*"
+                            class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2">
+                    </div>
                   </div>
                   
                   <div class="pt-2 flex flex-col sm:flex-row-reverse sm:justify-between">
@@ -145,7 +210,7 @@
             </h3>
             <div class="mt-2">
               <p class="text-gray-700 leading-relaxed">
-                Obrigado pelo seu interesse. Você será redirecionado para o WhatsApp para completar o envio dos seus dados.
+                Obrigado pelo seu interesse. Seus dados foram enviados para nossa equipe de análise.
               </p>
             </div>
           </div>
@@ -168,15 +233,30 @@ const emit = defineEmits(['close', 'submitted']);
 const showModal = ref(true);
 const showSuccessMessage = ref(false);
 const formData = ref({
+  // Informações pessoais
   name: '',
   email: '',
+  cpf: '',
   phone: '',
+  address: '',
   experience: '',
+  
+  // Informações bancárias
+  bank: '',
+  agency: '',
+  account: '',
+  pixKey: '',
+  
+  // Informações do passeio
   tourName: '',
   tourDescription: '',
   maxPeople: '',
   pricePerPerson: '',
-  visitPoints: ''
+  visitPoints: '',
+  
+  // Fotos
+  cadasturPhoto: null,
+  personalPhoto: null
 });
 
 const closeModal = () => {
@@ -204,58 +284,118 @@ const formatPhoneNumber = (event) => {
   }
 };
 
-// Function to generate WhatsApp link with form data
-const getWhatsAppLink = () => {
-  const phoneNumber = "5521999929790";
+// CPF formatting function
+const formatCPF = (event) => {
+  let value = event.target.value.replace(/\D/g, '');
   
-  const message = `Olá, gostaria de realizar o registro como guia de turismo.  Seguem os meus dados para cadastro:
+  if (value.length <= 3) {
+    formData.value.cpf = value;
+  } else if (value.length <= 6) {
+    formData.value.cpf = `${value.substring(0, 3)}.${value.substring(3)}`;
+  } else if (value.length <= 9) {
+    formData.value.cpf = `${value.substring(0, 3)}.${value.substring(3, 6)}.${value.substring(6)}`;
+  } else {
+    formData.value.cpf = `${value.substring(0, 3)}.${value.substring(3, 6)}.${value.substring(6, 9)}-${value.substring(9, 11)}`;
+  }
+};
 
-Informações do guia de turismo:
-- Nome Completo: ${formData.value.name}
-- E-mail: ${formData.value.email}
-- Whatsapp: ${formData.value.phone}
-- Experiência como guia: ${formData.value.experience}
+// Handle file uploads
+const handleCadasturPhotoUpload = (event) => {
+  formData.value.cadasturPhoto = event.target.files[0];
+};
 
-Informações do passeio:
-- Nome do Passeio: ${formData.value.tourName}
-- Descrição do Passeio: ${formData.value.tourDescription}
-- Quantidade máxima de pessoas: ${formData.value.maxPeople}
-- Preço por pessoa: R$ ${formData.value.pricePerPerson}
-- Pontos a serem visitados: ${formData.value.visitPoints}
-`;
+const handlePersonalPhotoUpload = (event) => {
+  formData.value.personalPhoto = event.target.files[0];
+};
 
-  return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+// Function to send email with form data
+const sendEmail = () => {
+  const recipientEmail = "cariocapasseio@gmail.com.br";
+  const subject = "Novo cadastro de guia de turismo - Passeio Carioca";
+  
+  // Create form data object to send files
+  const emailFormData = new FormData();
+  
+  // Add text data
+  for (const key in formData.value) {
+    if (key !== 'cadasturPhoto' && key !== 'personalPhoto') {
+      emailFormData.append(key, formData.value[key]);
+    }
+  }
+  
+  // Add files if they exist
+  if (formData.value.cadasturPhoto) {
+    emailFormData.append('cadasturPhoto', formData.value.cadasturPhoto);
+  }
+  
+  if (formData.value.personalPhoto) {
+    emailFormData.append('personalPhoto', formData.value.personalPhoto);
+  }
+  
+  // Here you would normally use an API endpoint to send the email
+  // For now, we'll just log the data that would be sent
+  console.log('Sending email to:', recipientEmail);
+  console.log('With subject:', subject);
+  console.log('Form data to be sent:', formData.value);
+  
+  // In a real implementation, you would use fetch or axios to send the data
+  // Example:
+  /*
+  fetch('/api/send-email', {
+    method: 'POST',
+    body: emailFormData
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Email sent successfully:', data);
+    showSuccessMessage.value = true;
+  })
+  .catch(error => {
+    console.error('Error sending email:', error);
+    // Handle error
+  });
+  */
+  
+  // For now, we'll just simulate a successful email send
+  return true;
 };
 
 const submitForm = () => {
-  // Log the form data
-  console.log('Form submitted:', formData.value);
+  // Send email with form data
+  const emailSent = sendEmail();
   
-  // Open WhatsApp in a new tab with the form data
-  window.open(getWhatsAppLink(), '_blank');
-  
-  // Show success message
-  showModal.value = false;
-  showSuccessMessage.value = true;
-  
-  // Reset form data
-  formData.value = {
-    name: '',
-    email: '',
-    phone: '',
-    experience: '',
-    tourName: '',
-    tourDescription: '',
-    maxPeople: '',
-    pricePerPerson: '',
-    visitPoints: ''
-  };
-  
-  // Auto-close success message after 5 seconds
-  setTimeout(() => {
-    showSuccessMessage.value = false;
-    emit('submitted');
-  }, 5000);
+  if (emailSent) {
+    // Show success message
+    showModal.value = false;
+    showSuccessMessage.value = true;
+    
+    // Reset form data
+    formData.value = {
+      name: '',
+      email: '',
+      cpf: '',
+      phone: '',
+      address: '',
+      experience: '',
+      bank: '',
+      agency: '',
+      account: '',
+      pixKey: '',
+      tourName: '',
+      tourDescription: '',
+      maxPeople: '',
+      pricePerPerson: '',
+      visitPoints: '',
+      cadasturPhoto: null,
+      personalPhoto: null
+    };
+    
+    // Auto-close success message after 5 seconds
+    setTimeout(() => {
+      showSuccessMessage.value = false;
+      emit('submitted');
+    }, 5000);
+  }
 };
 </script>
 

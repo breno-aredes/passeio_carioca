@@ -20,8 +20,8 @@ export const scrollToSection = (selector, offset = 64) => {
  * Used for navigation consistency
  */
 export const appSections = [
-  { id: 'hero', label: 'Home', path: '#hero' },
-  { id: 'conheca', label: 'Sobre nós', path: '#conheca' },
-  { id: 'anuncie', label: 'Cadastre-se como guia de turismo', path: '#anuncie', isModal: true },
-  { id: 'seja-guia', label: 'Comercialize seus passeios', path: '#seja-guia', isModal: true }
+  { id: 'hero', label: 'Home', path: '/' },
+  { id: 'parcerias', label: 'Parcerias e Conquistas', path: '/parcerias-conquistas' },
+  { id: 'anuncie-section', label: 'Anuncie', path: '/anuncie' },
+  { id: 'comercialize', label: 'Comercialize seus passeios', path: '#comercialize', isModal: true }
 ]; 

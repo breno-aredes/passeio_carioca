@@ -48,6 +48,14 @@ const mapPins = reactive([
     position: { top: '47%', left: '62%' },
     type: 'location'
   },
+  {
+    id: 6,
+    name: 'Voz da cidade',
+    description: 'Uma experiência imersiva com áudios que narram a vida e o tempo de figuras importantes na história do Rio: as estátuas da cidade estão mapeadas no aplicativo. Encontre o símbolo do microfone e descubra como essas personalidades viveram em suas épocas.',
+    category: 'Áudio',
+    position: { top: '42%', left: '52%' },
+    type: 'audio'
+  },
 ]);
 
 // Features with descriptions
@@ -132,9 +140,13 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
                        :style="{ top: pin.position.top, left: pin.position.left }"
                        @mouseenter="handlePinHover(pin)"
                        @mouseleave="resetActivePin">
-                    <div class="pin-icon flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                    <div class="pin-icon flex items-center justify-center" :class="{ 'audio-pin': pin.type === 'audio' }">
+                      <svg v-if="pin.type === 'location'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                         <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                      </svg>
+                      <svg v-if="pin.type === 'audio'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                        <path d="M8.25 4.5a3.75 3.75 0 117.5 0v8.25a3.75 3.75 0 11-7.5 0V4.5z" />
+                        <path d="M6 10.5a.75.75 0 01.75.75v1.5a5.25 5.25 0 1010.5 0v-1.5a.75.75 0 011.5 0v1.5a6.751 6.751 0 01-6 6.709v2.291h3a.75.75 0 010 1.5h-7.5a.75.75 0 010-1.5h3v-2.291a6.751 6.751 0 01-6-6.709v-1.5A.75.75 0 016 10.5z" />
                       </svg>
                     </div>
                     
@@ -281,6 +293,10 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
   border-radius: 50%;
   border: 2px solid white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.audio-pin {
+  background-color: #7c3aed;
 }
 
 .pin-icon svg {

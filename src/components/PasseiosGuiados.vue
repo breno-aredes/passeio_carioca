@@ -153,20 +153,6 @@ onBeforeUnmount(() => {
                   <div class="tour-image" :style="{ backgroundImage: `url('${tour.imgSrc}')` }">
                     <div class="tour-overlay"></div>
                   </div>
-                  
-                  <div class="tour-info-container tour-info-right">
-                    <div class="tour-duration">
-                      <i class="pi pi-clock"></i>
-                      <span>{{ tour.duration }}</span>
-                    </div>
-                  </div>
-                  
-                  <div class="tour-info-container tour-info-left">
-                    <div class="tour-capacity">
-                      <i class="pi pi-users"></i>
-                      <span>Capacidade: {{ tour.capacity }}</span>
-                    </div>
-                  </div>
                 </div>
 
                 <div class="tour-content">
@@ -180,29 +166,6 @@ onBeforeUnmount(() => {
                   </div>
 
                   <p class="tour-description">{{ tour.description }}</p>
-                  
-                  <div class="tour-ratings">
-                    <div class="rating-item">
-                      <span class="rating-label">Avaliação do passeio:</span>
-                      <div class="rating-value-container">
-                        <span class="rating-value">{{ tour.tourRating }}</span>
-                        <div class="rating-stars">
-                          <i v-for="n in Math.floor(tour.tourRating)" :key="n" class="pi pi-star-fill star-filled"></i>
-                          <i v-if="tour.tourRating % 1 > 0" class="pi pi-star star-empty"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="rating-item">
-                      <span class="rating-label">Avaliação do guia:</span>
-                      <div class="rating-value-container">
-                        <span class="rating-value">{{ tour.guideRating }}</span>
-                        <div class="rating-stars">
-                          <i v-for="n in Math.floor(tour.guideRating)" :key="n" class="pi pi-star-fill star-filled"></i>
-                          <i v-if="tour.guideRating % 1 > 0" class="pi pi-star star-empty"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -245,6 +208,12 @@ onBeforeUnmount(() => {
   overflow: hidden;
 }
 
+/* Override the global section-overlay */
+#passeios .section-overlay {
+  background: transparent;
+  background-image: none;
+}
+
 .title-decoration {
   width: 50%;
   height: 2px;
@@ -269,24 +238,28 @@ onBeforeUnmount(() => {
 .carousel-container {
   position: relative;
   padding: 20px 0;
+  background: transparent;
 }
 
 .carousel-wrapper {
   position: relative;
   overflow: hidden;
   margin: 0 50px;
+  background: transparent;
 }
 
 .carousel-track {
   display: flex;
   transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
   will-change: transform;
+  background: transparent;
 }
 
 .carousel-slide {
   flex-shrink: 0;
   padding: 0 12px;
   box-sizing: border-box;
+  background: transparent;
 }
 
 .nav-button {
@@ -351,10 +324,11 @@ onBeforeUnmount(() => {
 .tour-card {
   overflow: hidden;
   border-radius: 16px;
-  background: white;
+  background: transparent;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  height: 100%;
+  height: auto;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   transform: translateY(0);
@@ -367,6 +341,7 @@ onBeforeUnmount(() => {
 .tour-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .tour-image-container {
@@ -393,43 +368,12 @@ onBeforeUnmount(() => {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
 }
 
-.tour-info-container {
-  position: absolute;
-  bottom: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.tour-info-right {
-  right: 16px;
-  align-items: flex-end;
-}
-
-.tour-info-left {
-  left: 16px;
-  align-items: flex-start;
-}
-
-.tour-capacity,
-.tour-duration {
-  background: rgba(255, 255, 255, 0.7);
-  color: #1e40af;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  backdrop-filter: blur(3px);
-}
-
 .tour-content {
   padding: 20px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  background: transparent;
 }
 
 .tour-header {
@@ -456,52 +400,9 @@ onBeforeUnmount(() => {
   color: #475569;
   font-size: 0.95rem;
   margin-bottom: 16px;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  line-height: 1.4;
+  overflow: visible;
   flex-grow: 1;
-}
-
-.tour-ratings {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: auto;
-  border-top: 1px solid #e2e8f0;
-  padding-top: 12px;
-}
-
-.rating-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.rating-label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #64748b;
-}
-
-.rating-value-container {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.rating-value {
-  font-weight: 700;
-  color: #1e40af;
-}
-
-.rating-stars {
-  display: flex;
-  color: #f59e0b;
-}
-
-.star-filled, .star-empty {
-  font-size: 0.85rem;
 }
 
 /* Responsive styling */
@@ -534,10 +435,6 @@ onBeforeUnmount(() => {
   .tour-description {
     -webkit-line-clamp: 2;
     font-size: 0.9rem;
-  }
-  
-  .rating-label {
-    font-size: 0.8rem;
   }
 }
 </style>

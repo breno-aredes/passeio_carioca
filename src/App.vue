@@ -5,12 +5,9 @@
     <Navbar />
     
     <main class="flex-grow relative z-10">
-      <HeroSection />
-      <ConhecaPasseioCarioca />
-      <MapaGeolocalizado />
-      <PasseiosGuiados />
-      <Gameficacao />
+      <router-view />
     </main>
+    
     <Footer />
   </div>
 </template>
@@ -18,11 +15,6 @@
 <script setup>
 import Navbar from './components/Navbar.vue';
 import Footer from './components/Footer.vue';
-import HeroSection from './components/HeroSection.vue';
-import ConhecaPasseioCarioca from './components/ConhecaPasseioCarioca.vue';
-import Gameficacao from './components/Gameficacao.vue';
-import MapaGeolocalizado from './components/MapaGeolocalizado.vue';
-import PasseiosGuiados from './components/PasseiosGuiados.vue';
 </script>
 
 <style>
@@ -71,5 +63,9 @@ html {
   background: linear-gradient(to right, #2563eb, #60a5fa);
   margin: 1rem auto 1.5rem;
   border-radius: 2px;
+}
+
+.app-container {
+  overflow-x: hidden;
 }
 </style>

@@ -27,12 +27,12 @@
                  transitionDelay: isLoaded && !scrollTriggered ? '0.6s' : '0.2s'
                }">
             <!-- App Store Button -->
-            <a href="#" class="flex items-center px-5 py-2 hover:scale-105 transition-transform duration-300">
+            <a href="https://apps.apple.com/br/app/passeio-carioca-oficial/id6737744915" target="_blank" rel="noopener noreferrer" class="flex items-center px-5 py-2 hover:scale-105 transition-transform duration-300">
               <img src="/images/disponivel-app-store.png" alt="App Store Badge" class="w-240 h-20">
             </a>
             
             <!-- Google Play Button -->
-            <a href="#" class="flex items-center px-5 py-2 hover:scale-105 transition-transform duration-300">
+            <a href="https://play.google.com/store/apps/details?id=com.passeio_carioca.app" target="_blank" rel="noopener noreferrer" class="flex items-center px-5 py-2 hover:scale-105 transition-transform duration-300">
               <img src="/images/disponivel-google-play.png" alt="Google Play Badge" class="w-240 h-20">
             </a>
           </div>

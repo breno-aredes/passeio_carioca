@@ -135,6 +135,23 @@ function revealItem(medalha) {
             </div>
           </div>
         </div>
+        
+        <!-- Medal hover instruction moved below medals -->
+        <div class="text-center mt-8 mb-10">
+          <p class="text-sm text-gray-700 font-medium hover-instruction-glow">Passe o mouse sobre as medalhas para revelá-las</p>
+        </div>
+
+        <!-- Medal Rewards Text -->
+        <div class="reward-info mt-8 p-6 rounded-lg shadow-md text-center">
+          <div class="reward-bg"></div>
+          <div class="relative z-10">
+            <h3 class="text-xl font-semibold text-blue-900 mb-3 reward-title">Recompensa</h3>
+            <p class="text-gray-700">
+              Encontre as medalhas com símbolo do cifrão ao lado <span class="inline-flex items-center justify-center w-5 h-5 bg-yellow-400 text-yellow-800 rounded-full font-bold animate-pulse">$</span>, 
+              complete o circuito fazendo checkins presenciais e ganhe um prêmio.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
     
@@ -201,6 +218,72 @@ function revealItem(medalha) {
   animation: pulse 2s infinite;
 }
 
+/* Reward info styling */
+.reward-info {
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  background: transparent;
+}
+
+.reward-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.5) 0%, 
+    rgba(224, 231, 255, 0.6) 25%,
+    rgba(199, 210, 254, 0.3) 50%,
+    rgba(224, 231, 255, 0.6) 75%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+  z-index: 0;
+  backdrop-filter: blur(8px);
+}
+
+.reward-bg::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at center,
+    rgba(224, 231, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  animation: rotateBg 15s linear infinite;
+  z-index: 1;
+}
+
+@keyframes rotateBg {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.reward-info:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(30, 64, 175, 0.1);
+}
+
+.reward-title {
+  position: relative;
+  display: inline-block;
+  letter-spacing: 1px;
+}
+
+.reward-title::after {
+  content: '';
+  position: absolute;
+  width: 60%;
+  height: 2px;
+  bottom: -6px;
+  left: 20%;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.6), transparent);
+  border-radius: 2px;
+}
+
 /* Hero overlay styling (copied from HeroSection) */
 .hero-overlay {
   position: absolute;
@@ -216,5 +299,21 @@ function revealItem(medalha) {
   0% { transform: scale(0.95); opacity: 0.5; }
   50% { transform: scale(1.05); opacity: 0.8; }
   100% { transform: scale(0.95); opacity: 0.5; }
+}
+
+/* Hover instruction animation - updated */
+.hover-instruction-glow {
+  position: relative;
+  display: inline-block;
+  font-weight: 500;
+  animation: textGlow 3s infinite alternate;
+}
+
+@keyframes textGlow {
+  0% { text-shadow: -15px 0 15px rgba(59, 130, 246, 0), 0 0 0 rgba(59, 130, 246, 0); }
+  25% { text-shadow: -15px 0 15px rgba(59, 130, 246, 0.2), 0 0 5px rgba(59, 130, 246, 0.1); }
+  50% { text-shadow: 0 0 15px rgba(59, 130, 246, 0.3), 0 0 5px rgba(59, 130, 246, 0.2); }
+  75% { text-shadow: 15px 0 15px rgba(59, 130, 246, 0.2), 0 0 5px rgba(59, 130, 246, 0.1); }
+  100% { text-shadow: 15px 0 15px rgba(59, 130, 246, 0), 0 0 0 rgba(59, 130, 246, 0); }
 }
 </style>
