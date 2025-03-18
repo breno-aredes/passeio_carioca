@@ -1,32 +1,86 @@
 <template>
-  <section class="py-16 bg-white">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl md:text-4xl font-bold text-center text-blue-900 mb-12">
-        Anuncie
-      </h2>
-      <div class="max-w-4xl mx-auto">
-        <p class="text-lg text-gray-700 text-center mb-10">
-          Espaço para anúncios e publicidade.
-          Conteúdo a ser desenvolvido posteriormente.
-        </p>
-        
-        <!-- Placeholder for content -->
-        <div class="flex justify-center">
-          <div class="p-8 border-2 border-dashed border-blue-300 rounded-lg bg-blue-50 text-center">
-            <p class="text-blue-900">
-              Conteúdo em desenvolvimento
-            </p>
-          </div>
-        </div>
-      </div>
+  <section class="py-16 bg-transparent overflow-hidden relative">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <AnuncieHeader />
+      <PlanosList />
+      <AnuncieContato />
+    </div>
+    
+    <!-- Light overlay for section readability -->
+    <div class="absolute inset-0 z-1">
+      <div class="section-overlay"></div>
     </div>
   </section>
 </template>
 
 <script setup>
-// Component logic will be added later
+import AnuncieHeader from '../components/anuncie/AnuncieHeader.vue';
+import PlanosList from '../components/anuncie/PlanosList.vue';
+import AnuncieContato from '../components/anuncie/AnuncieContato.vue';
 </script>
 
 <style scoped>
-/* Styling will be added as needed */
+/* Using the same styling patterns as in other components */
+.title-decoration {
+  width: 50%;
+  height: 2px;
+  margin: 0 auto 24px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.4), transparent);
+  border-radius: 2px;
+  position: relative;
+}
+
+.title-decoration::before {
+  content: '';
+  position: absolute;
+  width: 15%;
+  height: 2px;
+  background-color: rgba(30, 64, 175, 0.6);
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+/* Custom styles for cards */
+section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Section overlay for background */
+.section-overlay {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95));
+  backdrop-filter: blur(3px);
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Card hover effects */
+.card-container {
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.card-container:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.02);
+}
+
+/* Pulse animation for images on hover */
+img:hover {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style> 
