@@ -1,5 +1,5 @@
 <template>
-  <section class="py-8 bg-white">
+  <section class="py-8 bg-transparent">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-6xl mx-auto">
         <h3 class="text-2xl font-bold text-blue-900 mb-8">
@@ -62,8 +62,8 @@
           </div>
           
           <div class="col-span-1 flex items-center justify-center">
-            <img src="/images/anuncie-illustration.png" alt="Anuncie" class="max-w-full h-auto" 
-                 onerror="this.src='/images/rio-banner.jpg'" />
+            <img src="/images/logo_novo_passeiocarioca.jpeg" alt="Anuncie no Passeio Carioca" class="max-w-full h-auto rounded-lg shadow-lg" 
+                 onerror="this.src='/images/anuncie-placeholder.jpg'" />
           </div>
         </div>
         

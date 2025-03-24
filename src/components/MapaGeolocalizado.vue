@@ -158,6 +158,11 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
                     </div>
                   </div>
                 </div>
+                
+                <!-- Instruction text overlay positioned on the mockup -->
+                <div class="absolute inset-x-0 bottom-36 text-center">
+                  <p class="text-sm text-gray-700 font-medium hover-instruction-glow bg-white/80 py-1 px-2 rounded-md mx-auto inline-block shadow-sm">Passe o mouse sobre os pins para mais informações</p>
+                </div>
               </div>
             </div>
           </div>
@@ -358,5 +363,15 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
 .backdrop-filter {
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
+}
+
+.hover-instruction-glow {
+  transition: all 0.3s ease;
+  text-shadow: 0 0 0 rgba(37, 99, 235, 0);
+}
+
+.hover-instruction-glow:hover {
+  color: #2563eb;
+  text-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
 }
 </style>

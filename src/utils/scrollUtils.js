@@ -22,6 +22,7 @@ export const scrollToSection = (selector, offset = 64) => {
 export const appSections = [
   { id: 'hero', label: 'Home', path: '/' },
   { id: 'parcerias', label: 'Parcerias e Conquistas', path: '/parcerias-conquistas' },
+  { id: 'prefeituras', label: 'Prefeituras', path: '/prefeituras' },
   { id: 'anuncie-section', label: 'Anuncie', path: '/anuncie' },
   { id: 'comercialize', label: 'Comercialize seus passeios', path: '#comercialize', isModal: true }
 ]; 

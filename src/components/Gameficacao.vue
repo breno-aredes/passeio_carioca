@@ -230,15 +230,8 @@ function revealItem(medalha) {
 .reward-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.5) 0%, 
-    rgba(224, 231, 255, 0.6) 25%,
-    rgba(199, 210, 254, 0.3) 50%,
-    rgba(224, 231, 255, 0.6) 75%,
-    rgba(255, 255, 255, 0.5) 100%
-  );
+  background: transparent;
   z-index: 0;
-  backdrop-filter: blur(8px);
 }
 
 .reward-bg::before {
@@ -248,18 +241,8 @@ function revealItem(medalha) {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(
-    circle at center,
-    rgba(224, 231, 255, 0.3) 0%,
-    rgba(255, 255, 255, 0) 60%
-  );
-  animation: rotateBg 15s linear infinite;
+  background: transparent;
   z-index: 1;
-}
-
-@keyframes rotateBg {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }
 
 .reward-info:hover {

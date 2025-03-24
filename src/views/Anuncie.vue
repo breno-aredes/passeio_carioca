@@ -1,6 +1,6 @@
 <template>
   <section class="py-16 bg-transparent overflow-hidden relative">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10">
       <AnuncieHeader />
       <PlanosList />
       <AnuncieContato />
@@ -49,38 +49,10 @@ section {
 
 /* Section overlay for background */
 .section-overlay {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95));
-  backdrop-filter: blur(3px);
   position: absolute;
   inset: 0;
   z-index: 0;
 }
 
-/* Card hover effects */
-.card-container {
-  background-color: transparent;
-  transition: all 0.3s ease;
-}
-
-.card-container:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  transform: scale(1.02);
-}
-
-/* Pulse animation for images on hover */
-img:hover {
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+/* Removed img:hover animation */
 </style> 
