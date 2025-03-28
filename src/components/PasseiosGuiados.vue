@@ -5,47 +5,66 @@ import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
 const tours = reactive([
   {
     id: 1,
-    title: "Rio Modernista",
-    location: "Centro do Rio, Flamengo",
-    description: "Embarque numa jornada onde a inovação do século XX se encontra com a energia urbana da cidade, explorando a arquitetura modernista que revolucionou o Rio.",
-    capacity: 15,
-    tourRating: 4.9,
-    guideRating: 4.8,
-    duration: "3h30",
-    imgSrc: "/images/passeios/mec-2.jpg"
+    nome: "Avenida Rio Branco",
+    local: "Cinelândia, Clube Naval, Banco Central, Ed. A Noite",
+    descricao: "Passeio por uma das mais importantes avenidas do Rio de Janeiro, com seus prédios históricos e modernos.",
+    imagem: "/images/passeios/clube-naval-2.jpg"
   },
   {
     id: 2,
-    title: "Laranjeiras Histórica",
-    location: "Laranjeiras",
-    description: "Explore o charmoso bairro de Laranjeiras, descubra seus palacetes históricos e a atmosfera tranquila e elegante que faz deste um dos mais belos e preservados bairros cariocas.",
-    capacity: 12,
-    tourRating: 4.8,
-    guideRating: 5.0,
-    duration: "2h45",
-    imgSrc: "/images/passeios/ed-laranjeiras.jpeg"
+    nome: "Roteiro Histórico do Catete",
+    local: "Catete",
+    descricao: "Explore a arquitetura do Palácio do Catete, antiga residência presidencial, hoje o Museu da República.",
+    imagem: "/images/passeios/palacio-do-catete.jpg"
   },
   {
     id: 3,
-    title: "Rio Art Déco",
-    location: "Centro, Copacabana",
-    description: "Explore os elegantes e sofisticados edifícios Art Déco que adornam as ruas do Rio, um estilo que marcou época durante a transformação urbana da cidade nas décadas de 1930 e 1940.",
-    capacity: 10,
-    tourRating: 4.7,
-    guideRating: 4.9,
-    duration: "3h15",
-    imgSrc: "/images/passeios/23.jpg"
+    nome: "Rio Art Nouveau",
+    local: "Centro do Rio",
+    descricao: "Descubra a arquitetura Art Nouveau do início do século XX espalhada pelas ruas do Rio de Janeiro.",
+    imagem: "/images/passeios/franklin5.jpg"
   },
   {
     id: 4,
-    title: "Santa Teresa Boêmia",
-    location: "Santa Teresa",
-    description: "Conheça o reduto artístico e boêmio do Rio, com suas ruelas charmosas, casarões históricos e uma vista deslumbrante da cidade maravilhosa.",
-    capacity: 20,
-    tourRating: 4.9,
-    guideRating: 4.7,
-    duration: "4h00",
-    imgSrc: "/images/passeios/mec-2.jpg"
+    nome: "Caminho Costeiro",
+    local: "Avenida Atlântica",
+    descricao: "Descubra as histórias por trás dos belos prédios históricos à beira-mar da Av. Atlântica.",
+    imagem: "/images/passeios/18.jpg"
+  },
+  {
+    id: 5,
+    nome: "Rio Modernista",
+    local: "Centro do Rio, Flamengo",
+    descricao: "Embarque numa jornada onde a inovação do século XX se encontra com a energia urbana da cidade.",
+    imagem: "/images/passeios/mec-2.jpg"
+  },
+  {
+    id: 6,
+    nome: "Laranjeiras Histórica",
+    local: "Laranjeiras",
+    descricao: "Explore o bairro de Laranjeiras, conhecido por seus palacetes e sua atmosfera tranquila e elegante.",
+    imagem: "/images/passeios/ed-laranjeiras.jpeg"
+  },
+  {
+    id: 7,
+    nome: "Rio Art Déco",
+    local: "Pedra da Gávea, Pedra Bonita",
+    descricao: "Explore os elegantes e sofisticados edifícios Art Déco ao longo das ruas do Rio de Janeiro.",
+    imagem: "/images/passeios/23.jpg"
+  },
+  {
+    id: 8,
+    nome: "Flamengo Antigo",
+    local: "Flamengo, Largo do Machado, Catete",
+    descricao: "Descubra a história por trás dos belos prédios e palacetes que se alinham à margem da baía.",
+    imagem: "/images/passeios/biarritz2.jpg"
+  },
+  {
+    id: 9,
+    nome: "Um Passeio pela Cinelândia",
+    local: "Theatro Municipal, Palácio Pedro Ernesto",
+    descricao: "Admire os magníficos edifícios históricos e culturais no coração da cidade do Rio.",
+    imagem: "/images/passeios/16.jpg"
   }
 ]);
 
@@ -150,22 +169,22 @@ onBeforeUnmount(() => {
             >
               <div class="tour-card" :class="{ 'active': index >= currentIndex && index < currentIndex + itemsToShow }">
                 <div class="tour-image-container">
-                  <div class="tour-image" :style="{ backgroundImage: `url('${tour.imgSrc}')` }">
+                  <div class="tour-image" :style="{ backgroundImage: `url('${tour.imagem}')` }">
                     <div class="tour-overlay"></div>
                   </div>
                 </div>
 
                 <div class="tour-content">
                   <div class="tour-header">
-                    <h3 class="tour-title">{{ tour.title }}</h3>
+                    <h3 class="tour-title">{{ tour.nome }}</h3>
                   </div>
 
                   <div class="tour-location">
                     <i class="pi pi-map-marker"></i>
-                    <span>{{ tour.location }}</span>
+                    <span>{{ tour.local }}</span>
                   </div>
 
-                  <p class="tour-description">{{ tour.description }}</p>
+                  <p class="tour-description">{{ tour.descricao }}</p>
                 </div>
               </div>
             </div>

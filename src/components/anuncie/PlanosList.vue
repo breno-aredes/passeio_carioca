@@ -66,12 +66,6 @@
                  onerror="this.src='/images/anuncie-placeholder.jpg'" />
           </div>
         </div>
-        
-        <div class="text-center mt-6">
-          <h4 class="text-xl font-medium text-blue-900 mb-8">
-            Consulte valores e tire suas dúvidas
-          </h4>
-        </div>
       </div>
     </div>
   </section>

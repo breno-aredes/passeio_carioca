@@ -1,7 +1,24 @@
 <template>
-  <section class="py-16 bg-transparent overflow-hidden relative">
+  <section class="pt-16 pb-16 bg-transparent overflow-hidden relative">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10">
-      <AnuncieHeader />
+      <!-- Header Section -->
+      <div class="mb-16 flex justify-center">
+        <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8 max-w-4xl">
+          <img src="/images/logo_novo_passeiocarioca-removebg.png" alt="Passeio Carioca Logo" class="h-auto md:h-44 object-contain flex-shrink-0">
+          <div class="text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
+              Anuncie Conosco!
+            </h2>
+            <div class="title-decoration mx-auto"></div>
+            <p class="text-lg text-gray-700 max-w-3xl mx-auto">
+              Alcance Mais Clientes: Promova Seu Negócio com o Passeio Carioca!
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-4xl mx-auto border-b border-gray-300 mb-8"></div>
+      
+      <!-- Content Sections -->
       <PlanosList />
       <AnuncieContato />
     </div>
@@ -14,7 +31,6 @@
 </template>
 
 <script setup>
-import AnuncieHeader from '../components/anuncie/AnuncieHeader.vue';
 import PlanosList from '../components/anuncie/PlanosList.vue';
 import AnuncieContato from '../components/anuncie/AnuncieContato.vue';
 </script>

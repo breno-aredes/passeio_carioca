@@ -15,20 +15,11 @@
           <ul class="space-y-2">
             <li v-for="section in sections" :key="section.id">
               <router-link 
-                v-if="!section.isModal"
                 :to="section.path" 
                 class="text-gray-200 hover:text-white transition-colors"
               >
                 {{ section.label }}
               </router-link>
-              <a 
-                v-else
-                href="#" 
-                @click.prevent="handleModal(section)"
-                class="text-gray-200 hover:text-white transition-colors"
-              >
-                {{ section.label }}
-              </a>
             </li>
           </ul>
         </div>
@@ -87,21 +78,12 @@
 
 <script setup>
 import { inject } from 'vue';
+import { useRouter } from 'vue-router';
 import { appSections } from '../utils/scrollUtils';
 
+const router = useRouter();
 const sections = appSections;
 const emitter = inject('emitter', null);
-
-const handleModal = (section) => {
-  if (section.id === 'comercialize') {
-    if (emitter) {
-      emitter.emit('open-comercialize-modal');
-    } else {
-      // Fallback if emitter is not available
-      window.location.href = '#';
-    }
-  }
-};
 </script>
 
 <style scoped>

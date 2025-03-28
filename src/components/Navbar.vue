@@ -19,8 +19,7 @@
             <router-link 
               v-for="section in sections" 
               :key="section.id" 
-              :to="section.isModal ? '#' : section.path"
-              @click="section.isModal ? handleModalNavigation(section) : null"
+              :to="section.path"
               class="nav-link px-3 py-2 rounded-md text-base font-medium text-blue-900 hover:text-blue-600 transition-colors relative">
               {{ section.label }}
             </router-link>
@@ -43,8 +42,8 @@
         <router-link 
           v-for="section in sections" 
           :key="section.id" 
-          :to="section.isModal ? '#' : section.path"
-          @click="handleMobileNavigation(section)"
+          :to="section.path"
+          @click="isOpen = false"
           class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-blue-900 hover:bg-blue-100/70 transition-all duration-200">
           {{ section.label }}
         </router-link>
@@ -54,54 +53,31 @@
   
   <!-- Spacer to prevent content from hiding behind fixed navbar -->
   <div class="h-12"></div>
-  
-  <!-- Modal component -->
-  <ModalComercializeSeusPasseios v-if="showComercializeModal" @close="showComercializeModal = false" @submitted="handleModalSubmitted" />
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted, inject } from 'vue';
 import { useRouter } from 'vue-router';
 import { appSections } from '../utils/scrollUtils';
-import ModalComercializeSeusPasseios from './ModalComercializeSeusPasseios.vue';
 
 const router = useRouter();
 const isOpen = ref(false);
 const scrolled = ref(false);
 const sections = appSections;
-const showComercializeModal = ref(false);
 const emitter = inject('emitter');
 
 const checkScroll = () => {
   scrolled.value = window.scrollY > 50;
 };
 
-const handleModalNavigation = (section) => {
-  if (section.id === 'comercialize') {
-    showComercializeModal.value = true;
-  }
-};
-
-const handleMobileNavigation = (section) => {
-  if (section.isModal) {
-    handleModalNavigation(section);
-  }
-  isOpen.value = false;
-};
-
-const handleModalSubmitted = () => {
-  // You can add any additional logic here after form is submitted
-  showComercializeModal.value = false;
-};
-
 onMounted(() => {
   window.addEventListener('scroll', checkScroll);
   checkScroll();
   
-  // Listen for events from other components
+  // Listen for events from other components that may need to navigate to the comercialize page
   if (emitter) {
-    emitter.on('open-comercialize-modal', () => {
-      showComercializeModal.value = true;
+    emitter.on('navigate-to-comercialize', () => {
+      router.push('/comercialize-seus-passeios');
     });
   }
 });
@@ -111,7 +87,7 @@ onUnmounted(() => {
   
   // Clean up event listeners
   if (emitter) {
-    emitter.off('open-comercialize-modal');
+    emitter.off('navigate-to-comercialize');
   }
 });
 </script>

@@ -1,14 +1,19 @@
 <template>
-  <section class="py-16 bg-transparent overflow-hidden relative">
+  <section class="pt-16 pb-16 bg-transparent overflow-hidden relative">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-blue-900">
-          Parcerias e Conquistas
-        </h2>
-        <div class="title-decoration"></div>
-        <p class="text-xl text-gray-700 max-w-3xl mx-auto">
-          Conheça as parcerias e conquistas que fazem parte da nossa jornada
-        </p>
+      <div class="mb-16 flex justify-center">
+        <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8 max-w-4xl">
+          <img src="/images/logo_novo_passeiocarioca-removebg.png" alt="Passeio Carioca Logo" class="h-auto md:h-44 object-contain flex-shrink-0">
+          <div class="text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
+              Parcerias e Conquistas
+            </h2>
+            <div class="title-decoration mx-auto"></div>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+              Conheça as parcerias e conquistas que fazem parte da nossa jornada
+            </p>
+          </div>
+        </div>
       </div>
 
       <!-- Parcerias Section -->

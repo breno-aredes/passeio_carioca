@@ -24,5 +24,5 @@ export const appSections = [
   { id: 'parcerias', label: 'Parcerias e Conquistas', path: '/parcerias-conquistas' },
   { id: 'prefeituras', label: 'Prefeituras', path: '/prefeituras' },
   { id: 'anuncie-section', label: 'Anuncie', path: '/anuncie' },
-  { id: 'comercialize', label: 'Comercialize seus passeios', path: '#comercialize', isModal: true }
+  { id: 'comercialize', label: 'Comercialize seus passeios', path: '/comercialize-seus-passeios' }
 ]; 

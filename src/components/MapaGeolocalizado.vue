@@ -97,6 +97,22 @@ onMounted(() => {
   setTimeout(() => {
     mapLoaded.value = true;
   }, 500);
+  
+  // Start the pulse animation after map loads
+  setTimeout(() => {
+    pulseAnimation.value = true;
+    
+    // Change highlighted pin every 3 seconds to draw attention
+    const pinInterval = setInterval(() => {
+      highlightedPin.value = highlightedPin.value >= mapPins.length ? 1 : highlightedPin.value + 1;
+    }, 3000);
+    
+    // Clear interval after 12 seconds
+    setTimeout(() => {
+      clearInterval(pinInterval);
+      highlightedPin.value = null;
+    }, 12000);
+  }, 1500);
 });
 
 // Scroll to top
@@ -106,6 +122,10 @@ const scrollToTop = () => {
     behavior: 'smooth'
   });
 };
+
+// Animation for pins to indicate interactivity
+const highlightedPin = ref(1); // Start with the first pin highlighted
+const pulseAnimation = ref(false);
 
 // Define image path - direct path from public folder with timestamp to prevent caching
 const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
@@ -136,7 +156,10 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
                 <div class="map-pins-container absolute">
                   <div v-for="pin in mapPins" :key="pin.id" 
                        class="absolute pin-marker"
-                       :class="{ 'pin-active': activePin && activePin.id === pin.id }"
+                       :class="{ 
+                         'pin-active': activePin && activePin.id === pin.id,
+                         'pin-highlight': highlightedPin === pin.id && !activePin
+                       }"
                        :style="{ top: pin.position.top, left: pin.position.left }"
                        @mouseenter="handlePinHover(pin)"
                        @mouseleave="resetActivePin">
@@ -160,8 +183,12 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
                 </div>
                 
                 <!-- Instruction text overlay positioned on the mockup -->
-                <div class="absolute inset-x-0 bottom-36 text-center">
-                  <p class="text-sm text-gray-700 font-medium hover-instruction-glow bg-white/80 py-1 px-2 rounded-md mx-auto inline-block shadow-sm">Passe o mouse sobre os pins para mais informações</p>
+                <div class="absolute left-1/2 transform -translate-x-1/2 bottom-44 text-center z-30 w-full">
+                  <p class="text-xs text-gray-700 font-medium bg-white/90 py-1 px-2 rounded-md mx-auto inline-block shadow-sm max-w-[180px]"
+                     :class="{ 'pulse-animation': pulseAnimation }">
+                    <i class="pi pi-info-circle mr-1 text-blue-600"></i>
+                    Passe o mouse sobre os pins
+                  </p>
                 </div>
               </div>
             </div>
@@ -282,6 +309,25 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
   transform: scale(1.1);
 }
 
+.pin-highlight {
+  animation: pulse-pin 1.5s infinite;
+}
+
+@keyframes pulse-pin {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.15);
+    filter: brightness(1.2);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
 .pin-active {
   z-index: 30;
 }
@@ -373,5 +419,22 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
 .hover-instruction-glow:hover {
   color: #2563eb;
   text-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
+}
+
+.pulse-animation {
+  animation: pulse-text 2s infinite;
+  border-left: 2px solid #2563eb;
+}
+
+@keyframes pulse-text {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(37, 99, 235, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+  }
 }
 </style>
