@@ -187,6 +187,7 @@ function revealItem(medalha) {
 .medal-panel {
   border-radius: 24px;
   padding: 2rem;
+  background-color: transparent;
 }
 
 .medal-container {
@@ -220,7 +221,7 @@ function revealItem(medalha) {
 
 /* Reward info styling */
 .reward-info {
-  border: 2px solid rgba(59, 130, 246, 0.2);
+  border: 2px solid transparent;
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease-in-out;
@@ -274,7 +275,7 @@ function revealItem(medalha) {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
   pointer-events: none;
 }
 
@@ -298,5 +299,21 @@ function revealItem(medalha) {
   50% { text-shadow: 0 0 15px rgba(59, 130, 246, 0.3), 0 0 5px rgba(59, 130, 246, 0.2); }
   75% { text-shadow: 15px 0 15px rgba(59, 130, 246, 0.2), 0 0 5px rgba(59, 130, 246, 0.1); }
   100% { text-shadow: 15px 0 15px rgba(59, 130, 246, 0), 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+.section-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  pointer-events: none;
+}
+
+#gameficacao {
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
 }
 </style>

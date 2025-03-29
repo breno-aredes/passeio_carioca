@@ -87,6 +87,26 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
+.title-decoration {
+  width: 50%;
+  height: 2px;
+  margin: 0 auto 24px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.4), transparent);
+  border-radius: 2px;
+  position: relative;
+}
+
+.title-decoration::before {
+  content: '';
+  position: absolute;
+  width: 15%;
+  height: 2px;
+  background-color: rgba(30, 64, 175, 0.6);
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
 .icon-container {
   padding: 1.5rem;
   border-radius: 50%;

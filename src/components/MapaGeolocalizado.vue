@@ -187,7 +187,7 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
                   <p class="text-xs text-gray-700 font-medium bg-white/90 py-1 px-2 rounded-md mx-auto inline-block shadow-sm max-w-[180px]"
                      :class="{ 'pulse-animation': pulseAnimation }">
                     <i class="pi pi-info-circle mr-1 text-blue-600"></i>
-                    Passe o mouse sobre os pins
+                    Passe o mouse sobre os pins para ver as informações
                   </p>
                 </div>
               </div>
