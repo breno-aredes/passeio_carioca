@@ -13,7 +13,7 @@
         </p>
         
         <!-- Social Media Buttons -->
-        <div class="flex justify-center mt-12 space-x-8">
+        <div class="flex flex-col md:flex-row justify-center items-center mt-12 space-y-6 md:space-y-0 md:space-x-8">
           <!-- YouTube Button -->
           <a href="https://www.youtube.com/@PasseioCarioca" target="_blank" rel="noopener noreferrer" class="social-button youtube-button group">
             <div class="icon-container">
@@ -79,12 +79,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.75rem 2rem;
+  padding: 1rem 1.5rem;
   border-radius: 16px;
   transition: all 0.3s ease;
   text-decoration: none;
-  min-width: 220px;
+  width: 90%;
+  max-width: 220px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+@media (min-width: 768px) {
+  .social-button {
+    padding: 1.75rem 2rem;
+    width: auto;
+  }
 }
 
 .title-decoration {
@@ -108,24 +116,44 @@
 }
 
 .icon-container {
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 50%;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   transition: all 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+@media (min-width: 768px) {
+  .icon-container {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+}
+
 .icon-container svg {
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
+}
+
+@media (min-width: 768px) {
+  .icon-container svg {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 .button-text {
   font-weight: 600;
-  font-size: 1.25rem;
+  font-size: 1rem;
   transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .button-text {
+    font-size: 1.25rem;
+  }
 }
 
 /* YouTube Button */

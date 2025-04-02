@@ -82,14 +82,13 @@ const features = [
   }
 ];
 
-// Handle pin hover to show details
-const handlePinHover = (pin) => {
-  activePin.value = pin;
-};
-
-// Reset active pin on mouse leave
-const resetActivePin = () => {
-  activePin.value = null;
+// Handle pin interactions (for both desktop and mobile)
+const togglePin = (pin) => {
+  if (activePin.value && activePin.value.id === pin.id) {
+    activePin.value = null;
+  } else {
+    activePin.value = pin;
+  }
 };
 
 // Animation for map loading
@@ -137,7 +136,7 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
       <div class="text-center mb-12">
         <h2 class="text-4xl md:text-5xl font-bold mb-4 text-blue-900">Mapa Geolocalizado</h2>
         <div class="title-decoration"></div>
-        <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+        <p class="text-xl md:text-lg text-gray-700 max-w-3xl mx-auto">
           Cada monumento conta uma história, mas mais do que isso, ele molda um comportamento. 
           Se você quer conhecer a cultura carioca caminhando por suas ruas, vielas e avenidas, chegou ao lugar certo! No aplicativo Passeio Carioca você encontra pontos históricos, monumentos, igrejas, bares e restaurantes tradicionais e muito mais para programar a sua visita.         
         </p>
@@ -161,8 +160,7 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
                          'pin-highlight': highlightedPin === pin.id && !activePin
                        }"
                        :style="{ top: pin.position.top, left: pin.position.left }"
-                       @mouseenter="handlePinHover(pin)"
-                       @mouseleave="resetActivePin">
+                       @click="togglePin(pin)">
                     <div class="pin-icon flex items-center justify-center" :class="{ 'audio-pin': pin.type === 'audio' }">
                       <svg v-if="pin.type === 'location'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                         <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
@@ -173,7 +171,7 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
                       </svg>
                     </div>
                     
-                    <!-- Pin Information Card (shown on hover) -->
+                    <!-- Pin Information Card (shown on tap/click) -->
                     <div v-if="activePin && activePin.id === pin.id" class="pin-info-card">
                       <h4 class="text-lg font-semibold text-blue-900">{{ pin.name }}</h4>
                       <p class="text-sm text-gray-700">{{ pin.description }}</p>
@@ -184,10 +182,10 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
                 
                 <!-- Instruction text overlay positioned on the mockup -->
                 <div class="absolute left-1/2 transform -translate-x-1/2 bottom-44 text-center z-30 w-full">
-                  <p class="text-xs text-gray-700 font-medium bg-white/90 py-1 px-2 rounded-md mx-auto inline-block shadow-sm max-w-[180px]"
+                  <p class="text-xs text-gray-700 font-medium bg-white/90 py-1 px-2 rounded-md mx-auto inline-block shadow-sm max-w-[200px]"
                      :class="{ 'pulse-animation': pulseAnimation }">
                     <i class="pi pi-info-circle mr-1 text-blue-600"></i>
-                    Passe o mouse sobre os pins para ver as informações
+                    Toque nos pins para ver detalhes dos locais
                   </p>
                 </div>
               </div>
@@ -205,13 +203,13 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
               </div>
               <div>
                 <h4 class="text-lg font-semibold text-blue-900">{{feature.title}}</h4>
-                <p class="text-gray-700">{{feature.description}}</p>
+                <p class="text-sm md:text-base text-gray-700">{{feature.description}}</p>
               </div>
             </div>
           </div>
           
           <div class="mt-8 text-center">
-            <button class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" 
+            <button class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-6 py-3 sm:px-8 rounded-full text-base sm:text-lg font-semibold shadow-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" 
                     @click="scrollToTop">
               <i class="pi pi-map-marker mr-2"></i>
               Explorar no aplicativo
@@ -303,10 +301,15 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
   width: 35px;
   height: 35px;
   pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .pin-marker:hover {
   transform: scale(1.1);
+}
+
+.pin-marker:active {
+  transform: scale(0.95);
 }
 
 .pin-highlight {
@@ -370,6 +373,13 @@ const screenImage = '/images/tela_mapa_app.jpeg?t=' + new Date().getTime();
   z-index: 40;
   animation: fadeIn 0.3s ease-out;
   border: 1px solid rgba(37, 99, 235, 0.3);
+}
+
+@media (max-width: 640px) {
+  .pin-info-card {
+    width: 180px;
+    padding: 10px;
+  }
 }
 
 .pin-info-card::after {

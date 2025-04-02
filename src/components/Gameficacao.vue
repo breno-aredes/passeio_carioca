@@ -138,7 +138,7 @@ function revealItem(medalha) {
         
         <!-- Medal hover instruction moved below medals -->
         <div class="text-center mt-8 mb-10">
-          <p class="text-sm text-gray-700 font-medium hover-instruction-glow">Passe o mouse sobre as medalhas para revelá-las</p>
+          <p class="text-sm text-gray-700 font-medium hover-instruction-glow">Toque nas medalhas para revelá-las</p>
         </div>
 
         <!-- Medal Rewards Text -->

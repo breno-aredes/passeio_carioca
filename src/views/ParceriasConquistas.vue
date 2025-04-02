@@ -24,6 +24,25 @@
           <h3 class="text-2xl md:text-3xl font-bold text-blue-900 mb-6 text-center">Parcerias</h3>
           <div class="title-decoration"></div>
           
+          <!-- Sérgio Castro Imóveis Partnership -->
+          <div class="bg-transparent rounded-2xl shadow-lg overflow-hidden mb-10 transform hover:scale-[1.01] transition-all duration-300 hover:bg-white/10">
+            <div class="p-8">
+              <div class="flex flex-col md:flex-row items-center gap-8 mb-6">
+                <a href="https://www.sergiocastro.com.br" target="_blank" class="flex-shrink-0 hover:opacity-80 transition-opacity transform hover:scale-105 duration-300">
+                  <img src="/images/parceriasconquistas/sergio_imob.jpg" alt="Sérgio Castro Imóveis" class="w-40 h-auto">
+                </a>
+                <div>
+                  <p class="text-lg text-gray-700 mb-4">
+                    O Passeio Carioca, uma inovação no turismo e na preservação cultural, uniu forças com a Sérgio Castro Imóveis, uma imobiliária com tradição e expertise no mercado carioca, para apresentar a você uma experiência única por meio do nosso aplicativo: "Viva Essa Experiência". Explore nosso mapa e após ler a história do imóvel descubra se há uma unidade a ser comercializada.
+                  </p>
+                  <p class="text-lg text-gray-700">
+                    Já pensou em morar ou investir em um imóvel que respire história? Com o Passeio Carioca e a Sérgio Castro Imóveis, essa possibilidade se torna real. Explore a cidade de uma maneira nunca antes vista, desvendando os segredos e as curiosidades de casas e prédios, muitos dos quais estão disponíveis para venda ou locação. Conduzimos o primeiro contato, a fim de esclarecer as curiosidades do imóvel e posteriormente todos os trâmites legais são realizados por essa renomada imobiliária.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           <!-- Mistral Partnership -->
           <div class="bg-transparent rounded-2xl shadow-lg overflow-hidden mb-10 transform hover:scale-[1.01] transition-all duration-300 hover:bg-white/10">
             <div class="p-8">
@@ -43,7 +62,7 @@
                 
                 <div class="mb-4">
                   <p class="font-semibold text-blue-900 mb-2">📍 Na loja Mistral:</p>
-                  <ul class="list-none pl-6 space-y-1">
+                  <ul class="list-none space-y-1">
                     <li class="text-gray-700">✨ Visite a unidade na Praça Santos Dumont, 74</li>
                     <li class="text-gray-700">✨ Apresente sua medalha do Passeio Carioca às vendedoras e valide seu desconto</li>
                   </ul>
@@ -51,7 +70,7 @@
                 
                 <div class="mb-4">
                   <p class="font-semibold text-blue-900 mb-2">💻 Online:</p>
-                  <ul class="list-none pl-6">
+                  <ul class="list-none">
                     <li class="text-gray-700">✨ Acesse o site <a href="https://www.mistral.com.br/passeiocarioca" target="_blank" class="text-blue-600 hover:underline hover:text-blue-700 transition-colors">www.mistral.com.br/passeiocarioca</a> e utilize o código "carioca" ao fazer login.</li>
                   </ul>
                 </div>
