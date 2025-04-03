@@ -144,26 +144,38 @@
                         class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2"></textarea>
             </div>
           
-            <!-- Upload de documentos -->
-            <h4 class="text-lg font-medium text-blue-900 border-b border-gray-200 pb-2 mb-4">Documentação</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div>
-                <label for="cadasturPhoto" class="block text-sm font-medium text-gray-700 mb-1">Foto do CADASTUR</label>
-                <input type="file" id="cadasturPhoto" @change="handleCadasturPhotoUpload" accept="image/*"
-                      class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2">
-              </div>
-              <div>
-                <label for="personalPhoto" class="block text-sm font-medium text-gray-700 mb-1">Sua foto pessoal</label>
-                <input type="file" id="personalPhoto" @change="handlePersonalPhotoUpload" accept="image/*"
-                      class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-900 focus:ring-blue-900 sm:text-sm transition-colors px-3 py-2">
+            <!-- Nota sobre fotos -->
+            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <svg class="h-5 w-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <div class="ml-3 text-sm text-blue-700">
+                  <h5 class="font-medium">Documentos necessários</h5>
+                  <p>Após enviar o formulário, você deverá anexar ao email que será gerado:</p>
+                  <ul class="list-disc ml-5 mt-1">
+                    <li>Foto do seu CADASTUR</li>
+                    <li>Sua foto pessoal</li>
+                  </ul>
+                </div>
               </div>
             </div>
           
             <div class="pt-2 flex justify-center">
               <button type="submit" 
+                      :disabled="isSubmitting"
                       class="inline-flex justify-center items-center rounded-lg px-8 py-3 bg-blue-900 text-base font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-900 transition-colors shadow-md">
-                <span>Enviar solicitação</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                <span v-if="!isSubmitting">Enviar solicitação</span>
+                <span v-else class="flex items-center">
+                  <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Enviando...
+                </span>
+                <svg v-if="!isSubmitting" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
               </button>
@@ -227,6 +239,7 @@
 import { ref } from 'vue';
 
 const showSuccessMessage = ref(false);
+const isSubmitting = ref(false);
 const formData = ref({
   // Informações pessoais
   name: '',
@@ -247,11 +260,7 @@ const formData = ref({
   tourDescription: '',
   maxPeople: '',
   pricePerPerson: '',
-  visitPoints: '',
-  
-  // Fotos
-  cadasturPhoto: null,
-  personalPhoto: null
+  visitPoints: ''
 });
 
 const closeSuccessMessage = () => {
@@ -288,100 +297,108 @@ const formatCPF = (event) => {
   }
 };
 
-// Handle file uploads
-const handleCadasturPhotoUpload = (event) => {
-  formData.value.cadasturPhoto = event.target.files[0];
-};
-
-const handlePersonalPhotoUpload = (event) => {
-  formData.value.personalPhoto = event.target.files[0];
-};
-
-// Function to send email with form data
-const sendEmail = () => {
-  const recipientEmail = "cariocapasseio@gmail.com.br";
+// Function to create and open mailto link
+const sendViaMailto = () => {
+  const recipient = "cariocapasseio@gmail.com.br";
   const subject = "Novo cadastro de guia de turismo - Passeio Carioca";
   
-  // Create form data object to send files
-  const emailFormData = new FormData();
+  // Create the email body with properly aligned important message box
+  const body = `
+*******************************************************************
+                        ATENÇÃO IMPORTANTE                        
+*******************************************************************
+                                                                 
+  VOCÊ DEVE ANEXAR A ESTE EMAIL (obrigatório):                   
+  1. Foto do seu CADASTUR                                        
+  2. Sua foto pessoal                                            
+                                                                 
+*******************************************************************
+
+Informações Pessoais:
+Nome: ${formData.value.name}
+Email: ${formData.value.email}
+CPF: ${formData.value.cpf}
+Telefone: ${formData.value.phone}
+Endereço: ${formData.value.address}
+Experiência: ${formData.value.experience}
+
+Informações Bancárias:
+Banco: ${formData.value.bank}
+Agência: ${formData.value.agency}
+Conta: ${formData.value.account}
+Chave PIX: ${formData.value.pixKey}
+
+Informações do Passeio:
+Nome do Passeio: ${formData.value.tourName}
+Descrição: ${formData.value.tourDescription}
+Quantidade máxima de pessoas: ${formData.value.maxPeople}
+Preço por pessoa: R$ ${formData.value.pricePerPerson}
+Pontos a serem visitados: ${formData.value.visitPoints}
+`;
   
-  // Add text data
-  for (const key in formData.value) {
-    if (key !== 'cadasturPhoto' && key !== 'personalPhoto') {
-      emailFormData.append(key, formData.value[key]);
+  // Encode the parameters
+  const encodedSubject = encodeURIComponent(subject);
+  const encodedBody = encodeURIComponent(body);
+  
+  // Create the mailto URL
+  const mailtoUrl = `mailto:${recipient}?subject=${encodedSubject}&body=${encodedBody}`;
+  
+  // For mobile compatibility, try to open the default email client
+  // Fall back to window.location if window.open doesn't work on some mobile browsers
+  try {
+    const mailWindow = window.open(mailtoUrl, '_blank');
+    if (!mailWindow || mailWindow.closed || typeof mailWindow.closed === 'undefined') {
+      // Fallback for mobile browsers that block popups
+      window.location.href = mailtoUrl;
     }
+  } catch (error) {
+    console.error('Error opening mailto link:', error);
+    window.location.href = mailtoUrl;
   }
   
-  // Add files if they exist
-  if (formData.value.cadasturPhoto) {
-    emailFormData.append('cadasturPhoto', formData.value.cadasturPhoto);
-  }
-  
-  if (formData.value.personalPhoto) {
-    emailFormData.append('personalPhoto', formData.value.personalPhoto);
-  }
-  
-  // Here you would normally use an API endpoint to send the email
-  // For now, we'll just log the data that would be sent
-  console.log('Sending email to:', recipientEmail);
-  console.log('With subject:', subject);
-  console.log('Form data to be sent:', formData.value);
-  
-  // In a real implementation, you would use fetch or axios to send the data
-  // Example:
-  /*
-  fetch('/api/send-email', {
-    method: 'POST',
-    body: emailFormData
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Email sent successfully:', data);
-    showSuccessMessage.value = true;
-  })
-  .catch(error => {
-    console.error('Error sending email:', error);
-    // Handle error
-  });
-  */
-  
-  // For now, we'll just simulate a successful email send
   return true;
 };
 
 const submitForm = () => {
-  // Send email with form data
-  const emailSent = sendEmail();
-  
-  if (emailSent) {
-    // Show success message
-    showSuccessMessage.value = true;
+  try {
+    isSubmitting.value = true;
     
-    // Reset form data
-    formData.value = {
-      name: '',
-      email: '',
-      cpf: '',
-      phone: '',
-      address: '',
-      experience: '',
-      bank: '',
-      agency: '',
-      account: '',
-      pixKey: '',
-      tourName: '',
-      tourDescription: '',
-      maxPeople: '',
-      pricePerPerson: '',
-      visitPoints: '',
-      cadasturPhoto: null,
-      personalPhoto: null
-    };
+    // Send via mailto link
+    const sent = sendViaMailto();
     
-    // Auto-close success message after 5 seconds
-    setTimeout(() => {
-      showSuccessMessage.value = false;
-    }, 5000);
+    if (sent) {
+      // Show success message
+      showSuccessMessage.value = true;
+      
+      // Reset form data
+      formData.value = {
+        name: '',
+        email: '',
+        cpf: '',
+        phone: '',
+        address: '',
+        experience: '',
+        bank: '',
+        agency: '',
+        account: '',
+        pixKey: '',
+        tourName: '',
+        tourDescription: '',
+        maxPeople: '',
+        pricePerPerson: '',
+        visitPoints: ''
+      };
+      
+      // Auto-close success message after 5 seconds
+      setTimeout(() => {
+        showSuccessMessage.value = false;
+      }, 5000);
+    }
+  } catch (error) {
+    console.error('Erro ao processar o formulário:', error);
+    alert('Houve um erro ao processar o formulário. Por favor, tente novamente.');
+  } finally {
+    isSubmitting.value = false;
   }
 };
 </script>

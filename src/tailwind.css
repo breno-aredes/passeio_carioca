@@ -52,3 +52,22 @@
     --ring: 224.3 76.3% 48%;
   }
 }
+
+/* Global text alignment styles */
+/* Apply text-justify to all paragraph elements unless they have text-center class */
+p:not(.text-center) {
+  text-align: justify;
+}
+
+/* Apply text-justify to list items and other text containers that aren't centered */
+li:not(.text-center),
+.text-gray-700:not(.text-center, p),
+.text-lg:not(.text-center, p),
+.text-xl:not(.text-center, p) {
+  text-align: justify;
+}
+
+/* Make sure not to override elements that need to be centered */
+.text-center, .text-center * {
+  text-align: center !important;
+}
