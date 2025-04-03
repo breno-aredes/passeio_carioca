@@ -299,7 +299,7 @@ const formatCPF = (event) => {
 
 // Function to create and open mailto link
 const sendViaMailto = () => {
-  const recipient = "cariocapasseio@gmail.com.br";
+  const recipient = "cariocapasseio@gmail.com";
   const subject = "Novo cadastro de guia de turismo - Passeio Carioca";
   
   // Create the email body with properly aligned important message box
