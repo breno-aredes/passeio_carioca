@@ -118,6 +118,27 @@
           <div class="title-decoration"></div>
           
           <transition-group appear name="stagger" tag="div" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- PEGN Feature -->
+            <div class="relative overflow-hidden bg-transparent rounded-2xl shadow-lg p-8 transform hover:scale-[1.02] hover:shadow-xl transition-all duration-300 hover:bg-white/10 flex flex-col items-center md:col-span-2" key="conquest-pegn">
+              <div class="absolute inset-0 bg-gradient-to-b from-transparent to-white/10 z-0"></div>
+              <div class="relative z-10 flex flex-col md:flex-row items-center gap-12 w-full">
+                <div class="flex-shrink-0 mb-6 md:mb-0">
+                  <img src="/images/parceriasconquistas/pegn.png" alt="PEGN" class="h-32 w-auto object-contain">
+                </div>
+                <div class="flex-grow w-full aspect-video max-w-3xl mx-auto">
+                  <iframe 
+                    class="w-full h-full rounded-xl shadow-md"
+                    src="https://www.youtube.com/embed/yuh6eLRaK-8" 
+                    title="Passeio Carioca no PEGN" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                  </iframe>
+                </div>
+              </div>
+              <p class="text-lg text-gray-700 text-center relative z-10 mt-6">Destaque no programa Pequenas Empresas & Grandes Negócios</p>
+            </div>
+            
             <!-- IBMEC -->
             <div class="relative overflow-hidden bg-transparent rounded-2xl shadow-lg p-8 transform hover:scale-[1.02] hover:shadow-xl transition-all duration-300 hover:bg-white/10 flex flex-col items-center" key="conquest-1">
               <div class="absolute inset-0 bg-gradient-to-b from-transparent to-white/10 z-0"></div>
