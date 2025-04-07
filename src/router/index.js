@@ -6,6 +6,7 @@ import ParceriasConquistas from '../views/ParceriasConquistas.vue'
 import Prefeituras from '../views/Prefeituras.vue'
 import Anuncie from '../views/Anuncie.vue'
 import ComercializeSeusPasseios from '../views/ComercializeSeusPasseios.vue'
+import PoliticaPrivacidade from '../views/PoliticaPrivacidade.vue'
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: '/comercialize-seus-passeios',
     name: 'ComercializeSeusPasseios',
     component: ComercializeSeusPasseios
+  },
+  {
+    path: '/politica-privacidade',
+    name: 'PoliticaPrivacidade',
+    component: PoliticaPrivacidade
   }
 ]
 

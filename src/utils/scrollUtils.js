@@ -24,5 +24,7 @@ export const appSections = [
   { id: 'parcerias', label: 'Parcerias e Conquistas', path: '/parcerias-conquistas' },
   { id: 'prefeituras', label: 'Prefeituras', path: '/prefeituras' },
   { id: 'anuncie-section', label: 'Anuncie', path: '/anuncie' },
-  { id: 'comercialize', label: 'Comercialize seus passeios', path: '/comercialize-seus-passeios' }
+  { id: 'comercialize', label: 'Comercialize seus passeios', path: '/comercialize-seus-passeios' },
+  /**{ id: 'politica-privacidade', label: 'Termos de Uso e Política de Privacidade', path: '/politica-privacidade' }
+  */ 
 ]; 
